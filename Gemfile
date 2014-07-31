@@ -18,4 +18,10 @@ gem "wdm", "~> 0.1.0", :platforms => [:mswin, :mingw]
 gem "tzinfo-data", platforms: [:mswin, :mingw]
 
 # Publishing to GitHub pages
-gem 'middleman-gh-pages'
+gem "middleman-gh-pages"
+
+# Easy API requests
+gem "faraday"
+
+# DOM parsing
+gem "nokogiri"
