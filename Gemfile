@@ -1,5 +1,5 @@
 #ruby=ruby-2.1.1
-#ruby-gemset=wddh
+#ruby-gemset=wabbitholes
 ruby '2.1.1'
 
 # If you have OpenSSL installed, we recommend updating
