@@ -1,5 +1,6 @@
 require 'faraday'
 require 'json'
+require 'uri'
 
 module Grok
   class Api
@@ -12,7 +13,7 @@ module Grok
     end
 
     def latest_30_total(title)
-      resp = @conn.get "latest30/#{title}"
+      resp = @conn.get URI.escape("latest30/#{title}")
 
       JSON.parse(resp.body)["daily_views"].values.inject(:+)
     end
