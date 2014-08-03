@@ -10,26 +10,29 @@
     <title><%= current_page.data.title || "The Middleman" %></title>
 
     <%= stylesheet_link_tag "normalize", "all" %>
-    <%= javascript_include_tag  "all" %>
   </head>
 
   <body>
-    <article>
-      <h1><%= current_page.data.articles.first.title %></h1>
-      <p><%= current_page.data.context %></p>
-    </article>
-    <% current_page.data.articles.each do |article| %>
-      <article>
-        <h1><%= article.title %></h1>
-        <p><%= article.extract %></p>
+    <div id="wrapper">
+      <article class="section">
+        <h1><%= current_page.data.articles.first.title %></h1>
+        <p><%= current_page.data.context %></p>
       </article>
-    <% end %>
-    <article>
-      <ul>
-        <% current_page.data.articles.each do |article| %>
-          <li><%= article.title %></li>
-        <% end %>
-      </ul>
-    </article>
+      <% current_page.data.articles.each do |article| %>
+        <article class="section">
+          <h1><%= article.title %></h1>
+          <p><%= article.extract %></p>
+        </article>
+      <% end %>
+      <article class="section">
+        <ul>
+          <% current_page.data.articles.each do |article| %>
+            <li><%= article.title %></li>
+          <% end %>
+        </ul>
+      </article>
+    </div>
+
+    <%= javascript_include_tag "all" %>
   </body>
 </html>
