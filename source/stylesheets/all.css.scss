@@ -1,7 +1,13 @@
 @charset "utf-8";
+@import "reset";
 @import "vendor/jquery.fullPage";
 
+// variables
+
+$desktop-mobile-width: 50em;
 $color-grey: #6d6e70;
+
+// common
 
 body {
   font-family: Georgia, serif;
@@ -24,4 +30,16 @@ article {
       color: $color-grey;
     }
   }
+}
+
+// desktop and landscape tablet
+
+@media all and (min-width: $desktop-mobile-width) {
+
+}
+
+// mobile and portrait tablet
+
+@media all and (max-width: $desktop-mobile-width) {
+
 }
