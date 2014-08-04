@@ -1,5 +1,6 @@
 //= require_tree .
 
 $('#wrapper').fullpage({
-  easing: "linear"
+  easing: "linear",
+  verticalCentered: false
 });
