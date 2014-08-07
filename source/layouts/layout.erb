@@ -21,8 +21,9 @@
       <% current_page.data.articles.each do |article| %>
         <article class="section">
           <div class="image"></div>
+           <div class="content">
           <h1><%= article.title %></h1>
-          <p><%= article.extract %></p>
+          <p><%= article.extract %></p></div>
         </article>
       <% end %>
       <article class="section">
