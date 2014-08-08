@@ -19,6 +19,11 @@ body {
 
 article {
 
+  &.card:nth-child(2n+1) {
+    background: #000;
+    color: #fff;
+  }
+
   p {
     line-height: 1.3;
   }
