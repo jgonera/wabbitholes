@@ -13,7 +13,12 @@
 </head>
 
 <body>
-  <div id="wrapper">
+  <nav>
+    <button class="previous">Previous</button>
+    <button class="next">Next</button>
+  </nav>
+
+  <div id="slider">
     <article class="section title">
       <div class="content">
         <h1><%= current_page.data.articles.first.title %></h1>
@@ -21,26 +26,25 @@
       </div>
     </article>
     <% current_page.data.articles.each do |article| %>
-    <article class="section card">
-      <div class="image"></div>
-      <div class="content">
-        <h1><%= article.title %></h1>
-        <p><%= article.extract %></p>
-        <footer> MADE BY 1024 UNIQUE AUTHORS </footer>
-
-      </div>
-    </article>
+      <article class="section card">
+        <div class="image"></div>
+        <div class="content">
+          <h1><%= article.title %></h1>
+          <p><%= article.extract %></p>
+          <footer> MADE BY 1024 UNIQUE AUTHORS </footer>
+        </div>
+      </article>
     <% end %>
     <article class="section summary">
-      <div class="about"></div>
-      <ul>
-        <div class="content">
-        <% current_page.data.articles.each do |article| %>
-        <li><%= article.title %></li>
-        <% end %><footer> If you read this carefully, you probably know a little bit about 10 topics.
-While you were reading this English Wikipedia received 479 Edits</footer></div>
-      </ul>
-
+      <div class="content">
+        <div class="about"></div>
+        <ul>
+          <% current_page.data.articles.each do |article| %>
+            <li><%= article.title %></li>
+          <% end %><footer> If you read this carefully, you probably know a little bit about 10 topics.
+            While you were reading this English Wikipedia received 479 Edits</footer>
+        </ul>
+      </div>
     </article>
   </div>
 

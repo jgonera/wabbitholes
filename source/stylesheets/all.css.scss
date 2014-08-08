@@ -1,6 +1,6 @@
 @charset "utf-8";
 @import "reset";
-@import "vendor/jquery.fullPage";
+@import "vendor/swipe";
 
 // variables
 
@@ -21,7 +21,7 @@ body {
 
 article {
 
-  &.card:nth-child(2n+1) {
+  &.card:nth-child(2n+1) .content {
     background: $color-background-alt;
     color: $color-text-alt;
   }
@@ -38,20 +38,36 @@ article {
   }
 }
 
+nav {
+  button {
+    position: fixed;
+    z-index: 2;
+  }
+
+  .previous {
+    left: 0;
+  }
+
+  .next {
+    right: 0;
+  }
+}
+
 // desktop and landscape tablet
 
 @media all and (min-width: $desktop-mobile-width) {
 
   article {
     .image {
+      position: fixed;
+      right: 0;
       width: 40%;
       height: 100%;
       background: url(image.jpg);
-      float: right;
+      z-index: 1;
     }
     .content {
-      padding: 70px;
-      width: 45%;
+      padding: 70px 50% 70px 70px;
     }
 
     h1 {
@@ -79,7 +95,9 @@ article {
     // content on splash screen
 
     &.title {
-      padding-top: 200px;
+      .content {
+        padding-top: 200px;
+      }
 
       h1 {
         font-size: 62px;
@@ -99,7 +117,6 @@ article {
 
       .content {
         padding: 70px;
-        width: 45%;
       }
       .about {
         position: absolute;
