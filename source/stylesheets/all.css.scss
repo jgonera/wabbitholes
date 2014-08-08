@@ -1,115 +1,116 @@
-  @charset "utf-8";
-  @import "reset";
-  @import "vendor/jquery.fullPage";
+@charset "utf-8";
+@import "reset";
+@import "vendor/jquery.fullPage";
 
-  // variables
+// variables
 
-  $desktop-mobile-width: 50em;
-  $color-background: #fff;
-  $color-text: #000;
-  $color-context: #6d6e70;
+$desktop-mobile-width: 50em;
+$color-background: #fff;
+$color-text: #000;
+$color-background-alt: #000;
+$color-text-alt: #fff;
+$color-context: #6d6e70;
 
-  // common
+// common
 
-  body {
-    font-family: Georgia, serif;
-    background: $color-background;
-    color: $color-text;
+body {
+  font-family: Georgia, serif;
+  background: $color-background;
+  color: $color-text;
+}
+
+article {
+
+  &.card:nth-child(2n+1) {
+    background: $color-background-alt;
+    color: $color-text-alt;
   }
 
-  article {
+  p {
+    line-height: 1.3;
+  }
 
-    &.card:nth-child(2n+1) {
-      background: #000;
-      color: #fff;
+  &.title {
+
+    p {
+      color: $color-context;
+    }
+  }
+}
+
+// desktop and landscape tablet
+
+@media all and (min-width: $desktop-mobile-width) {
+
+  article {
+    .image {
+      width: 40%;
+      height: 100%;
+      background: url(image.jpg);
+      float: right;
+    }
+    .content {
+      padding: 80px;
+      width: 45%;
+    }
+
+    h1 {
+      font-size: 62px;
     }
 
     p {
-      line-height: 1.3;
+      font-family: Baskerville;
+      margin-top: 30px;
+      font-size: 20px;
+      line-height: 32px;
     }
+
+    // content on splash screen
 
     &.title {
-
-      p {
-        color: $color-context;
-      }
-    }
-  }
-
-  // desktop and landscape tablet
-
-  @media all and (min-width: $desktop-mobile-width) {
-
-  	article {
-
-      .image {
-        width: 40%;
-        height: 100%;
-        background: url(image.jpg);
-        float: right;
-      }
-       .content {
-        padding: 80px;
-        width: 45%;
-       }
+      padding-top: 200px;
 
       h1 {
         font-size: 62px;
       }
 
       p {
-        font-family: Baskerville;
-        margin-top: 30px;
-        font-size: 20px;
-        line-height: 32px;
-      }
+        margin-top: 40px;
+        font-size: 24px;
 
-  //CONTENT ON SPLASH SCREEN
-
-      &.title {
-        padding-top: 200px;
-
-        h1 {
-          font-size: 62px;
-        }
-
-        p {
-          margin-top: 40px;
-          font-size: 24px;
-
-        }
       }
     }
-
   }
 
-  // mobile and portrait tablet
+}
 
-  @media all and (max-width: $desktop-mobile-width) {
+// mobile and portrait tablet
 
-    article {
-      padding: 15px;
+@media all and (max-width: $desktop-mobile-width) {
+
+  article {
+    padding: 15px;
+    h1 {
+      font-size: 40px;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    &.title {
+      padding-top: 50px;
+
       h1 {
         font-size: 40px;
       }
 
       p {
         margin-top: 15px;
-        font-size: 18px;
-      }
-
-      &.title {
-        padding-top: 50px;
-
-        h1 {
-          font-size: 40px;
-        }
-
-        p {
-          margin-top: 15px;
-          font-size: 21px;
-        }
+        font-size: 21px;
       }
     }
-
   }
+
+}
