@@ -50,7 +50,7 @@ article {
       float: right;
     }
     .content {
-      padding: 80px;
+      padding: 70px;
       width: 45%;
     }
 
@@ -58,12 +58,23 @@ article {
       font-size: 62px;
     }
 
+    footer {
+      font-family: Arial;
+      padding-top: 30px;
+      font-size: 12px;
+      line-height: 18px;
+      color: #00AF89;
+    }
+
     p {
       font-family: Baskerville;
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 20px;
       line-height: 32px;
     }
+
+
+
 
     // content on splash screen
 
@@ -75,9 +86,10 @@ article {
       }
 
       p {
-        margin-top: 40px;
-        font-size: 24px;
-
+        font-family: Baskerville;
+        margin-top: 30px;
+        font-size: 20px;
+        line-height: 30px;
       }
     }
   }
