@@ -59,11 +59,14 @@ article {
     }
 
     footer {
+
       font-family: Arial;
-      padding-top: 30px;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed #aaa;
       font-size: 12px;
       line-height: 18px;
-      color: #00AF89;
+      color: #999;
     }
 
     p {
@@ -72,9 +75,6 @@ article {
       font-size: 20px;
       line-height: 32px;
     }
-
-
-
 
     // content on splash screen
 
@@ -87,13 +87,46 @@ article {
 
       p {
         font-family: Baskerville;
-        margin-top: 30px;
+        margin-top: 5px;
         font-size: 20px;
         line-height: 30px;
       }
     }
-  }
 
+    // content on last screen
+
+    &.summary {
+
+      .content {
+        padding: 70px;
+        width: 45%;
+      }
+      .about {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 70px;
+        right: 70px;
+        background: url(about.svg);
+        background-size: 30px auto;
+      }
+      li {
+        font-family: Baskerville;
+        color: #999;
+
+        &:first-child {
+          color: #000;
+        }
+        &:last-child {
+          color: #000;
+        }
+        padding-top: 10px;
+        font-size: 32px;
+
+      }
+    }
+
+  }
 }
 
 // mobile and portrait tablet
@@ -124,5 +157,5 @@ article {
       }
     }
   }
-
 }
+

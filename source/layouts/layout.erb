@@ -31,12 +31,16 @@
       </div>
     </article>
     <% end %>
-    <article class="section">
+    <article class="section summary">
+      <div class="about"></div>
       <ul>
+        <div class="content">
         <% current_page.data.articles.each do |article| %>
         <li><%= article.title %></li>
-        <% end %>
+        <% end %><footer> If you read this carefully, you probably know a little bit about 10 topics.
+While you were reading this English Wikipedia received 479 Edits</footer></div>
       </ul>
+
     </article>
   </div>
 
