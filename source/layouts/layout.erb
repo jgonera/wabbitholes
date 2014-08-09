@@ -37,7 +37,7 @@
     <% end %>
     <article class="section summary">
       <div class="content">
-        <div class="about"></div>
+        <button class="about"></button>
         <ul>
           <% current_page.data.articles.each do |article| %>
             <li><%= article.title %></li>
@@ -47,6 +47,11 @@
       </div>
     </article>
   </div>
+
+  <aside class="overlay">
+    <button class="close">Close</button>
+    Hello, this was made by Vibha and Juliusz.
+  </aside>
 
   <%= javascript_include_tag "all" %>
 </body>

@@ -85,11 +85,21 @@
   $.Swipe = Swipe;
 }(window.jQuery || window.Zepto));
 
-var swipe = new $.Swipe('#slider');
+(function() {
+  var swipe = new $.Swipe('#slider');
 
-$('.previous').on('click', function() {
-  swipe.prev();
-});
-$('.next').on('click', function() {
-  swipe.next();
-});
+  $('.previous').on('click', function() {
+    swipe.prev();
+  });
+  $('.next').on('click', function() {
+    swipe.next();
+  });
+
+  $('.about').on('click touchend', function() {
+    $('.overlay').addClass('visible');
+  });
+  $('.overlay .close').on('click touchend', function() {
+    $('.overlay').removeClass('visible');
+  });
+}());
+

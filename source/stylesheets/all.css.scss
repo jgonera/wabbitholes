@@ -53,6 +53,21 @@ nav {
   }
 }
 
+.overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $color-background;
+  z-index: 2;
+
+  &.visible {
+    display: block;
+  }
+}
+
 // desktop and landscape tablet
 
 @media all and (min-width: $desktop-mobile-width) {
