@@ -174,5 +174,10 @@ nav {
       }
     }
   }
+
+  // TODO: remove when we get rid of buttons
+  nav {
+    display: none;
+  }
 }
 
