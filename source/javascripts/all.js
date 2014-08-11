@@ -46,13 +46,14 @@
     translate(this.$prevSlide.children(), -this.$container.width());
     translate(this.$nextSlide.children(), this.$container.width());
 
+    // wait for the transition to finish
     setTimeout($.proxy(function() {
       this.$slides.removeClass('swipe-active');
       this.$currentSlide
         .add(this.$prevSlide)
         .add(this.$nextSlide)
         .addClass('swipe-active');
-    }, this), 0);
+    }, this), 150);
   };
 
   Swipe.prototype._onTouchStart = function(ev) {
@@ -73,6 +74,7 @@
       translate(this.$prevSlide.children(), -this.$container.width() + deltaX);
       translate(this.$nextSlide.children(), this.$container.width() + deltaX);
       this.swiping = true;
+      ev.preventDefault();
     }
   };
 
@@ -84,17 +86,18 @@
       .add(this.$nextSlide)
       .add(this.$currentSlide)
       .removeClass('swipe-touch');
-    this.swiping = false;
 
-    if (-delta > threshold) {
+    if (this.swiping && -delta > threshold) {
       this.next();
-    } else if (delta > threshold) {
+    } else if (this.swiping && delta > threshold) {
       this.prev();
     } else {
       translate(this.$currentSlide.children(), 0);
       translate(this.$currentSlide.prev().children(), -this.$container.width());
       translate(this.$currentSlide.next().children(), this.$container.width());
     }
+
+    this.swiping = false;
   };
 
   $.Swipe = Swipe;
