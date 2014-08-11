@@ -21,23 +21,38 @@
   }
 
   Swipe.prototype.next = function() {
-    ++this.currentSlide;
+    this.currentSlide = this._nextSlide();
     this._update();
   };
 
   Swipe.prototype.prev = function() {
-    --this.currentSlide;
+    this.currentSlide = this._prevSlide();
     this._update();
   };
 
+  Swipe.prototype._nextSlide = function() {
+    return this.currentSlide < this.$slides.length - 1 ? this.currentSlide + 1 : 0;
+  };
+
+  Swipe.prototype._prevSlide = function() {
+    return this.currentSlide > 0 ? this.currentSlide - 1 : this.$slides.length - 1;
+  };
+
   Swipe.prototype._update = function() {
-    this.$slides.removeClass('swipe-current');
-    this.$currentSlide = this.$slides.eq(this.currentSlide).addClass('swipe-current');
-    this.$prevSlide = this.$slides.eq(this.currentSlide - 1);
-    this.$nextSlide = this.$slides.eq(this.currentSlide + 1);
+    this.$currentSlide = this.$slides.eq(this.currentSlide);
+    this.$prevSlide = this.$slides.eq(this._prevSlide());
+    this.$nextSlide = this.$slides.eq(this._nextSlide());
     translate(this.$currentSlide.children(), 0);
     translate(this.$prevSlide.children(), -this.$container.width());
     translate(this.$nextSlide.children(), this.$container.width());
+
+    setTimeout($.proxy(function() {
+      this.$slides.removeClass('swipe-active');
+      this.$currentSlide
+        .add(this.$prevSlide)
+        .add(this.$nextSlide)
+        .addClass('swipe-active');
+    }, this), 0);
   };
 
   Swipe.prototype._onTouchStart = function(ev) {
@@ -65,9 +80,9 @@
     var delta = ev.originalEvent.changedTouches[0].pageX - this.touchStartX
       threshold = this.$container.width() * 0.2;
 
-    this.$currentSlide
-      .add(this.$prevSlide)
+    this.$prevSlide
       .add(this.$nextSlide)
+      .add(this.$currentSlide)
       .removeClass('swipe-touch');
     this.swiping = false;
 
