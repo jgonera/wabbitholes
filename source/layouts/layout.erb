@@ -26,23 +26,23 @@
       </div>
     </article>
     <% current_page.data.articles.each do |article| %>
-      <article class="section card">
-        <div class="image"></div>
-        <div class="content">
-          <h1><%= article.title %></h1>
-          <p><%= article.extract %></p>
-          <footer> MADE BY 1024 UNIQUE AUTHORS </footer>
-        </div>
-      </article>
+    <article class="section card">
+      <div class="image"></div>
+      <div class="content">
+        <h1><%= article.title %></h1>
+        <p><%= article.extract %></p>
+        <footer> MADE BY 1024 UNIQUE AUTHORS </footer>
+      </div>
+    </article>
     <% end %>
     <article class="section summary">
       <div class="content">
         <button class="about"></button>
         <ul>
           <% current_page.data.articles.each do |article| %>
-            <li><%= article.title %></li>
+          <li><%= article.title %></li>
           <% end %><footer> If you read this carefully, you probably know a little bit about 10 topics.
-            While you were reading this English Wikipedia received 479 Edits</footer>
+          While you were reading this English Wikipedia received 479 Edits</footer>
         </ul>
       </div>
     </article>
@@ -50,14 +50,16 @@
 
 
   <aside class="overlay">
-    <button class="close">Close</button>
-    <p>
-    Rabbitholes was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a><br>
-    This 100 Day experiment visualizes popuar trails for the top 100 Wikipedia articles and trending topics. <br>
-    One popular article at a time.
- Data was collected from XYZ Data Sets.</p>
-  </aside>
+    <button class="close"></button>
+    <div class="content">
 
-  <%= javascript_include_tag "all" %>
-</body>
-</html>
+      <p>
+        Rabbitholes is a 100 Day experiment which visualizes popuar trails for the top 100 Wikipedia articles and trending topics, One popular article at a time. <br>
+        Data was collected from XYZ Data Sets. </p><br>
+        Rabbitholes was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a>
+      </div>
+    </aside>
+
+    <%= javascript_include_tag "all" %>
+  </body>
+  </html>
