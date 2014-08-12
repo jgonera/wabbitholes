@@ -17,7 +17,6 @@
       .on('touchend', $.proxy(this, '_onTouchEnd'));
     this.$slides = this.$container.children().addClass('swipe-slide');
     this.activate();
-    $(window).on('resize', $.proxy(this, '_update'));
   }
 
   Swipe.prototype.next = function() {
@@ -115,11 +114,13 @@
   Swipe.prototype.activate = function() {
     this.$container.addClass('swipe-container');
     this._update();
+    $(window).on('resize.swipe', $.proxy(this, '_update'));
   };
 
   Swipe.prototype.deactivate = function() {
     this.$container.removeClass('swipe-container');
     this.$slides.removeAttr('style');
+    $(window).off('.swipe');
   };
 
   $.Swipe = Swipe;
