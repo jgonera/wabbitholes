@@ -2,9 +2,12 @@
 <!-- Generator: Adobe Illustrator 17.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="20.002px" height="20.002px" viewBox="0 0 20.002 20.002" enable-background="new 0 0 20.002 20.002" xml:space="preserve">
-<path d="M12.122,10.001l5.792-5.792c0.586-0.586,0.586-1.536,0-2.121c-0.586-0.586-1.535-0.586-2.121,0L10,7.88L4.209,2.088
-	c-0.586-0.586-1.535-0.586-2.121,0c-0.586,0.585-0.586,1.535,0,2.121l5.792,5.792l-5.792,5.791c-0.586,0.586-0.586,1.536,0,2.121
-	c0.293,0.293,0.677,0.439,1.061,0.439c0.384,0,0.768-0.146,1.061-0.439L10,12.123l5.792,5.791c0.293,0.293,0.677,0.439,1.061,0.439
-	c0.384,0,0.768-0.146,1.061-0.439c0.586-0.585,0.586-1.535,0-2.121L12.122,10.001z"/>
+	 width="20.002px" height="20.002px" viewBox="22.168 0 20.002 20.002" enable-background="new 22.168 0 20.002 20.002"
+	 xml:space="preserve">
+<g>
+	
+		<line fill="none" stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" x1="24.631" y1="2.464" x2="39.706" y2="17.538"/>
+	
+		<line fill="none" stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" x1="39.706" y1="2.464" x2="24.631" y2="17.538"/>
+</g>
 </svg>
