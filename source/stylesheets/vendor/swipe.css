@@ -1,17 +1,9 @@
-/* XXX */
-html, body {
-  height: 100%;
-}
-
-/* XXX */
 .swipe-container {
-  width: 100%;
-  height: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.swipe-slide {
+.swipe-container .swipe-slide {
   position: absolute;
   top: 0;
   left: 0;
@@ -24,17 +16,17 @@ html, body {
  * (see https://code.google.com/p/chromium/issues/detail?id=20574)
  */
 
-.swipe-slide {
+.swipe-container .swipe-slide {
   -webkit-transform: translate3d(0, -9999px, 0);
   transform: translate3d(0, -9999px, 0);
 }
 
-.swipe-active {
+.swipe-container .swipe-active {
   -webkit-transition: -webkit-transform .15s ease-out;
   transition: transform .15s ease-out;
 }
 
-.swipe-touch {
+.swipe-container .swipe-touch {
   -webkit-transition: none;
   transition: none;
 }

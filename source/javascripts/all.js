@@ -12,22 +12,34 @@
     this.currentSlide = 0;
     this.swiping = false;
     this.$container = $(el)
-      .addClass('swipe-container')
       .on('touchstart', $.proxy(this, '_onTouchStart'))
       .on('touchmove', $.proxy(this, '_onTouchMove'))
       .on('touchend', $.proxy(this, '_onTouchEnd'));
     this.$slides = this.$container.children().addClass('swipe-slide');
-    this._update();
+    this.activate();
+    $(window).on('resize', $.proxy(this, '_update'));
   }
 
   Swipe.prototype.next = function() {
     this.currentSlide = this._nextSlide();
     this._update();
+
+    // FIXME: define callback/event and move outside
+    setTimeout($.proxy(function() {
+      this.$prevSlide.find('.content').scrollTop(0);
+      this.$nextSlide.find('.content').scrollTop(0);
+    }, this), 150);
   };
 
   Swipe.prototype.prev = function() {
     this.currentSlide = this._prevSlide();
     this._update();
+
+    // FIXME: define callback/event and move outside
+    setTimeout($.proxy(function() {
+      this.$prevSlide.find('.content').scrollTop(0);
+      this.$nextSlide.find('.content').scrollTop(0);
+    }, this), 150);
   };
 
   Swipe.prototype._nextSlide = function() {
@@ -67,7 +79,7 @@
 
   Swipe.prototype._onTouchMove = function(ev) {
     var deltaX = ev.originalEvent.touches[0].pageX - this.touchStartX,
-      deltaY = ev.originalEvent.touches[0].pageY - this.touchStartY;
+        deltaY = ev.originalEvent.touches[0].pageY - this.touchStartY;
 
     if (this.swiping || Math.abs(deltaY) < 10) {
       translate(this.$currentSlide, deltaX);
@@ -80,7 +92,7 @@
 
   Swipe.prototype._onTouchEnd = function(ev) {
     var delta = ev.originalEvent.changedTouches[0].pageX - this.touchStartX
-      threshold = this.$container.width() * 0.2;
+        threshold = this.$container.width() * 0.2;
 
     this.$currentSlide
       .add(this.$prevSlide)
@@ -100,11 +112,33 @@
     this.swiping = false;
   };
 
+  Swipe.prototype.activate = function() {
+    this.$container.addClass('swipe-container');
+    this._update();
+  };
+
+  Swipe.prototype.deactivate = function() {
+    this.$container.removeClass('swipe-container');
+    this.$slides.removeAttr('style');
+  };
+
   $.Swipe = Swipe;
 }(window.jQuery || window.Zepto));
 
 (function() {
-  window.swipe = new $.Swipe('#slider');
+  var swipe = window.swipe = new $.Swipe('#container'),
+      mediaQuery = window.matchMedia('(max-width: 50em)');
+
+  function checkMediaQuery(query) {
+    if (query.matches) {
+      swipe.activate();
+    } else {
+      swipe.deactivate();
+    }
+  }
+
+  checkMediaQuery(mediaQuery);
+  mediaQuery.addListener(checkMediaQuery);
 
   $('.previous').on('click', function() {
     swipe.prev();

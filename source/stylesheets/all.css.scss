@@ -14,7 +14,8 @@ $color-text-secondary: #999;
 
 // common
 
-body {
+html, body {
+  height: 100%;
   font-family: Baskerville, Georgia, serif;
   background: $color-background;
   color: $color-text;
@@ -22,7 +23,7 @@ body {
 
 article {
 
-  &.card:nth-child(2n+1) .content {
+  &.card:nth-child(2n+1) {
     background: $color-background-alt;
     color: $color-text-alt;
   }
@@ -57,21 +58,6 @@ aside {
 
 }
 
-nav {
-  button {
-    position: fixed;
-    z-index: 2;
-  }
-
-  .previous {
-    left: 0;
-  }
-
-  .next {
-    right: 0;
-  }
-}
-
 .overlay {
   display: none;
   position: absolute;
@@ -90,6 +76,9 @@ nav {
 // desktop and landscape tablet
 
 @media all and (min-width: $desktop-mobile-width) {
+  #container {
+    height: 100%;
+  }
 
   .content {
     padding: 70px 50% 70px 70px;
@@ -100,6 +89,8 @@ nav {
   }
 
   article {
+    min-height: 100%;
+
     .image {
       position: fixed;
       top: 0;
@@ -186,6 +177,10 @@ nav {
 // mobile and portrait tablet
 
 @media all and (max-width: $desktop-mobile-width) {
+  #container {
+    width: 100%;
+    height: 100%;
+  }
 
   article {
     width: 100%;
@@ -272,12 +267,6 @@ nav {
       }
     }
 
-  }
-
-
-  // TODO: remove when we get rid of buttons
-  nav {
-    display: none;
   }
 }
 
