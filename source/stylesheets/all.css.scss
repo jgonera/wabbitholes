@@ -188,16 +188,21 @@ nav {
 @media all and (max-width: $desktop-mobile-width) {
 
   article {
+    width: 100%;
+    height: 100%;
+
     .image {
-      position: fixed;
       width: 100%;
       height: 30%;
       background: url(image.jpg);
-      opacity: 20%;
-      z-index: 1;
     }
+
     .content {
-      padding: 45% 15px 0 15px;
+      padding: 15px;
+      width: 100%;
+      height: 70%%;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     h1 {
@@ -236,11 +241,12 @@ nav {
 
 
     }
-    &.summary {
 
+    &.summary {
       .content {
-        padding: 15px;
+        height: 100%;
       }
+
       .about {
         position: absolute;
         width: 30px;
@@ -250,6 +256,7 @@ nav {
         background: url(about.svg);
         background-size: 30px auto;
       }
+
       li {
         color: $color-text-secondary;
 

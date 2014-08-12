@@ -42,9 +42,9 @@
     this.$currentSlide = this.$slides.eq(this.currentSlide);
     this.$prevSlide = this.$slides.eq(this._prevSlide());
     this.$nextSlide = this.$slides.eq(this._nextSlide());
-    translate(this.$currentSlide.children(), 0);
-    translate(this.$prevSlide.children(), -this.$container.width());
-    translate(this.$nextSlide.children(), this.$container.width());
+    translate(this.$currentSlide, 0);
+    translate(this.$prevSlide, -this.$container.width());
+    translate(this.$nextSlide, this.$container.width());
 
     // wait for the transition to finish
     setTimeout($.proxy(function() {
@@ -70,9 +70,9 @@
       deltaY = ev.originalEvent.touches[0].pageY - this.touchStartY;
 
     if (this.swiping || Math.abs(deltaY) < 10) {
-      translate(this.$currentSlide.children(), deltaX);
-      translate(this.$prevSlide.children(), -this.$container.width() + deltaX);
-      translate(this.$nextSlide.children(), this.$container.width() + deltaX);
+      translate(this.$currentSlide, deltaX);
+      translate(this.$prevSlide, -this.$container.width() + deltaX);
+      translate(this.$nextSlide, this.$container.width() + deltaX);
       this.swiping = true;
       ev.preventDefault();
     }
@@ -82,9 +82,9 @@
     var delta = ev.originalEvent.changedTouches[0].pageX - this.touchStartX
       threshold = this.$container.width() * 0.2;
 
-    this.$prevSlide
+    this.$currentSlide
+      .add(this.$prevSlide)
       .add(this.$nextSlide)
-      .add(this.$currentSlide)
       .removeClass('swipe-touch');
 
     if (this.swiping && -delta > threshold) {
@@ -92,9 +92,9 @@
     } else if (this.swiping && delta > threshold) {
       this.prev();
     } else {
-      translate(this.$currentSlide.children(), 0);
-      translate(this.$currentSlide.prev().children(), -this.$container.width());
-      translate(this.$currentSlide.next().children(), this.$container.width());
+      translate(this.$currentSlide, 0);
+      translate(this.$prevSlide, -this.$container.width());
+      translate(this.$nextSlide, this.$container.width());
     }
 
     this.swiping = false;
@@ -104,7 +104,7 @@
 }(window.jQuery || window.Zepto));
 
 (function() {
-  var swipe = new $.Swipe('#slider');
+  window.swipe = new $.Swipe('#slider');
 
   $('.previous').on('click', function() {
     swipe.prev();
