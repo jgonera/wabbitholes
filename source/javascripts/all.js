@@ -126,15 +126,67 @@
   $.Swipe = Swipe;
 }(window.jQuery || window.Zepto));
 
+;(function($) {
+  var $window = $(window);
+
+  function Scroll(el) {
+    this.currentSlide = 0;
+    this.lastScrollTop = $window.scrollTop();
+    this.$slides = $(el).children();
+    this.activate();
+  }
+
+  Scroll.prototype.activate = function() {
+    $window.on('scroll.scroll', $.proxy(function() {
+			var scrollTop = $window.scrollTop(),
+          scrollBottom = scrollTop + $window.height(),
+          slidesCount = this.$slides.length - 1;
+
+      if (scrollTop > this.lastScrollTop && this.currentSlide + 1 <= slidesCount) {
+        var nextSlideTop = this.$slides.eq(this.currentSlide + 1).offset().top;
+
+        if (nextSlideTop < scrollBottom) {
+          ++this.currentSlide;
+          // FIXME: make this scroll smoothly
+          $window.scrollTop(nextSlideTop);
+        }
+      }
+
+      if (scrollTop < this.lastScrollTop && this.currentSlide - 1 >= 0) {
+        var $prevSlide = this.$slides.eq(this.currentSlide - 1),
+            prevSlideTop = $prevSlide.offset().top,
+            prevSlideBottom = prevSlideTop + $prevSlide.height();
+
+        if (prevSlideBottom > scrollTop) {
+          --this.currentSlide;
+          // FIXME: make this scroll smoothly
+          $window.scrollTop(prevSlideTop);
+        }
+      }
+
+      this.lastScrollTop = scrollTop;
+    }, this));
+  };
+
+  Scroll.prototype.deactivate = function() {
+    $window.off('.scroll');
+  };
+
+  $.Scroll = Scroll;
+}(window.jQuery || window.Zepto));
+
 (function() {
   var swipe = window.swipe = new $.Swipe('#container'),
+      scroll = window.scroll = new $.Scroll('#container'),
       mediaQuery = window.matchMedia('(max-width: 50em)');
 
   function checkMediaQuery(query) {
     if (query.matches && 'touchstart' in window) {
+      scroll.deactivate();
       swipe.activate();
     } else {
       swipe.deactivate();
+      scroll.activate();
     }
   }
 
