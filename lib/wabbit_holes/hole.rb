@@ -1,10 +1,12 @@
 require "wabbit_holes/article"
+require "wabbit_holes/api_trail_source"
 
 module WabbitHoles
   class Hole
-    def initialize(title, depth: 12)
+    def initialize(title, depth: 12, trail_source: ApiTrailSource)
       @title = title
       @depth = depth
+      @trail_source = ApiTrailSource.new
     end
 
     def fall
@@ -15,7 +17,7 @@ module WabbitHoles
         puts current_title
         article = Article.new(current_title)
         # FIXME: suboptimal, not needed after last article
-        current_title = article.hole
+        current_title = @trail_source.hole(current_title)
 
         articles << article.to_hash
       end
