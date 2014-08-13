@@ -3,10 +3,10 @@ require "wabbit_holes/api_trail_source"
 
 module WabbitHoles
   class Hole
-    def initialize(title, depth: 12, trail_source: ApiTrailSource)
+    def initialize(title, depth: 12, trail_source: ApiTrailSource.new)
       @title = title
       @depth = depth
-      @trail_source = ApiTrailSource.new
+      @trail_source = trail_source
     end
 
     def fall
