@@ -1,3 +1,5 @@
+require "uri"
+
 module WabbitHoles
   class TsvTrailSource
     def initialize(tsv_file)
@@ -17,9 +19,9 @@ module WabbitHoles
       targets = []
 
       # this is much faster than iterating over lines of the whole file in Ruby
-      `cat #{@tsv_file} | grep "^#{title}\\s"`.split("\n").each do |line|
+      `cat #{@tsv_file} | grep "^#{URI.escape(title)}\\s"`.split("\n").each do |line|
         source, target, hits = line.split("\t")
-        targets << { target: target, hits: hits.to_i } if source == title
+        targets << { target: URI.unescape(target), hits: hits.to_i } if URI.unescape(source) == title
       end
 
       targets
