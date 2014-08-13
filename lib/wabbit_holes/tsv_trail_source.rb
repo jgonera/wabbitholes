@@ -1,27 +1,28 @@
-require "mediawiki/api"
-require "mediawiki/extractor"
-require "grok/api"
-
 module WabbitHoles
   class TsvTrailSource
     def initialize(tsv_file)
-      @data = {}
-      File.open(tsv_file, "r") do |f|
-        lines = f.lines
-        # skip header
-        lines.next
-        lines.each do |line|
-          source, target, hits = line.split("\t")
-          @data[source] ||= []
-          @data[source] << { target: target, hits: hits }
-        end
-      end
+      @tsv_file = tsv_file
     end
 
     # return the most popular linked article in given article
     def hole(title)
-      @data[title].sort! { |a, b| a[:hits] <=> b[:hits] }
-      @data[title].last[:target]
+      targets = get_targets(title)
+      return nil if targets.empty?
+      targets.sort! { |a, b| b[:hits] <=> a[:hits] }.first[:target]
+    end
+
+    protected
+
+    def get_targets(title)
+      targets = []
+
+      # this is much faster than iterating over lines of the whole file in Ruby
+      `cat #{@tsv_file} | grep "^#{title}\\s"`.split("\n").each do |line|
+        source, target, hits = line.split("\t")
+        targets << { target: target, hits: hits.to_i } if source == title
+      end
+
+      targets
     end
   end
 end
