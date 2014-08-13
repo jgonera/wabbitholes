@@ -131,7 +131,7 @@
       mediaQuery = window.matchMedia('(max-width: 50em)');
 
   function checkMediaQuery(query) {
-    if (query.matches) {
+    if (query.matches && 'touchstart' in window) {
       swipe.activate();
     } else {
       swipe.deactivate();
