@@ -21,9 +21,12 @@ module WabbitHoles
         n = 0
 
         loop do
-          current_title = @trail_source.hole(current_title, n)
+          possible_title = @trail_source.hole(current_title, n)
           n += 1
-          break unless titles.include?(current_title)
+          unless titles.include?(possible_title)
+            current_title = possible_title
+            break
+          end
         end
 
         articles << article.to_hash
