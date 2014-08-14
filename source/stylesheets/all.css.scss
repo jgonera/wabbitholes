@@ -37,30 +37,9 @@ article {
 
 // styling for the about overlay
 
-aside {
-  font-size: 32px;
-
-  .content {
-    p {
-      line-height: 1.3;
-    }
-  }
-
-  .close {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top: 70px;
-    right: 70px;
-    background: url(close.svg);
-    background-size: 30px auto;
-  }
-
-}
-
 .overlay {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -89,6 +68,7 @@ aside {
   }
 
   article {
+    position: relative;
     min-height: 100%;
     position: relative;
 
@@ -145,6 +125,7 @@ aside {
 
     // content on last screen
 
+
     &.summary {
 
       .content {
@@ -159,8 +140,10 @@ aside {
         right: 70px;
         background: url(about.svg);
         background-size: 30px auto;
+        z-index: 2;
       }
 
+      // list
 
       li {
         color: $color-text-secondary;
@@ -174,6 +157,28 @@ aside {
         line-height: 1.3;
         font-size: 32px;
 
+      }
+    }
+  }
+
+  // styling for the overlay
+
+  aside {
+    font-size: 32px;
+
+    .close {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: 70px;
+      right: 70px;
+      background: url(close.svg);
+      background-size: 30px auto;
+    }
+
+    .content {
+      p {
+        line-height: 1.3;
       }
     }
 
@@ -213,7 +218,7 @@ aside {
     p {
       margin-top: 15px;
       font-size: 22px;
-       line-height: 1.2;
+      line-height: 1.2;
 
     }
 
@@ -241,20 +246,21 @@ aside {
         font-size: 21px;
       }
 
-
     }
 
     &.summary {
+
       .content {
         height: 100%;
+        padding: 20px;
       }
 
       .about {
         position: absolute;
         width: 30px;
         height: 30px;
-        top: 30px;
-        right: 15px;
+        top: 25px;
+        right: 20px;
         background: url(about.svg);
         background-size: 30px auto;
       }
@@ -269,9 +275,35 @@ aside {
           color: $color-text;
         }
         line-height: 1.3;
-        font-size: 32px;
+        font-size: 26px;
 
       }
+
+    }
+
+  }
+
+  // styling for the overlay
+
+  aside {
+    font-size: 22px;
+
+    .content {
+      padding: 20px 70px 20px 20px;
+
+      p {
+        line-height: 1.3;
+      }
+    }
+
+    .close {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: 25px;
+      right: 20px;
+      background: url(close.svg);
+      background-size: 30px auto;
     }
 
   }
