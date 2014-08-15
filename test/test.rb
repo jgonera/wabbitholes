@@ -4,8 +4,10 @@ require "mediawiki/extractor"
 require "grok/api"
 
 api = Mediawiki::Api.new("http://en.wikipedia.org/w/api.php")
-extractor = Mediawiki::LinkExtractor.new(api.get_lead_section("Surrealism"))
-grok_api = Grok::Api.new("http://stats.grok.se/json/en")
+#extractor = Mediawiki::LinkExtractor.new(api.get_lead_section("Surrealism"))
+#grok_api = Grok::Api.new("http://stats.grok.se/json/en")
 
-puts extractor.wikilinks
-puts grok_api.latest_30_total("Cat")
+#puts extractor.wikilinks
+#puts grok_api.latest_30_total("Cat")
+
+puts api.get_extract("Surrealism")

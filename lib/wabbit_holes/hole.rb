@@ -15,7 +15,7 @@ module WabbitHoles
       titles = []
 
       @depth.times do
-        puts current_title
+        STDERR.puts current_title
         article = Article.new(current_title)
         titles << current_title
         n = 0

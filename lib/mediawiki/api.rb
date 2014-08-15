@@ -25,17 +25,20 @@ module Mediawiki
       JSON.parse(resp.body)["mobileview"]["sections"][0]["text"]
     end
 
+    # TODO: accept multiple titles?
     def get_extract(title)
       resp = @conn.get "", {
         format: "json",
         action: "query",
+        redirects: true,
         prop: "extracts",
         titles: title,
-        exintro: true
+        exintro: true,
+        explaintext: true,
+        exsentences: 2
       }
 
-      # XXX return text only
-      JSON.parse(resp.body)
+      JSON.parse(resp.body)["query"]["pages"].values.first
     end
   end
 end
