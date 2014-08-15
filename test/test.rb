@@ -10,4 +10,4 @@ api = Mediawiki::Api.new("http://en.wikipedia.org/w/api.php")
 #puts extractor.wikilinks
 #puts grok_api.latest_30_total("Cat")
 
-puts api.get_extract("Surrealism")
+puts api.get_article_data("Surrealism")

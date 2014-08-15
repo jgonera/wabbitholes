@@ -25,7 +25,6 @@ module Mediawiki
       JSON.parse(resp.body)["mobileview"]["sections"][0]["text"]
     end
 
-    # TODO: accept multiple titles?
     def get_extract(title)
       resp = @conn.get "", {
         format: "json",
@@ -39,6 +38,29 @@ module Mediawiki
       }
 
       JSON.parse(resp.body)["query"]["pages"].values.first
+    end
+
+    def get_article_data(title)
+      resp = @conn.get "", {
+        format: "json",
+        action: "query",
+        redirects: true,
+        prop: "extracts|pageimages",
+        titles: title,
+        exintro: true,
+        explaintext: true,
+        exsentences: 3,
+        piprop: "thumbnail",
+        # one of MultimediaViewer buckets, avoid generating new sizes
+        pithumbsize: 1920
+      }
+
+      data = JSON.parse(resp.body)["query"]["pages"].values.first
+      {
+        "title" => data["title"],
+        "extract" => data["extract"],
+        "image_url" => data.has_key?("thumbnail") ? data["thumbnail"]["source"] : nil
+      }
     end
   end
 end

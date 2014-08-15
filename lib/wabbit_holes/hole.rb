@@ -1,4 +1,3 @@
-require "wabbit_holes/article"
 require "wabbit_holes/grok_source"
 
 module WabbitHoles
@@ -11,12 +10,10 @@ module WabbitHoles
 
     def fall
       current_title = @title
-      articles = []
       titles = []
 
       @depth.times do
         STDERR.puts current_title
-        article = Article.new(current_title)
         titles << current_title
         n = 0
 
@@ -28,11 +25,9 @@ module WabbitHoles
             break
           end
         end
-
-        articles << article.to_hash
       end
 
-      articles
+      titles
     end
   end
 end
