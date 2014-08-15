@@ -1,12 +1,12 @@
 require "wabbit_holes/article"
-require "wabbit_holes/api_trail_source"
+require "wabbit_holes/grok_source"
 
 module WabbitHoles
   class Hole
-    def initialize(title, depth: 12, trail_source: ApiTrailSource.new)
+    def initialize(title, depth: 12, source: GrokSource.new)
       @title = title
       @depth = depth
-      @trail_source = trail_source
+      @source = source
     end
 
     def fall
@@ -21,7 +21,7 @@ module WabbitHoles
         n = 0
 
         loop do
-          possible_title = @trail_source.hole(current_title, n)
+          possible_title = @source.hole(current_title, n)
           n += 1
           unless titles.include?(possible_title)
             current_title = possible_title

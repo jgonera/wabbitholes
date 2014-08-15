@@ -1,7 +1,7 @@
 require "uri"
 
 module WabbitHoles
-  class TsvTrailSource
+  class TsvSource
     def initialize(tsv_file)
       @tsv_file = tsv_file
     end

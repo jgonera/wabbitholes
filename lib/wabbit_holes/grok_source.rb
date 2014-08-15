@@ -3,7 +3,7 @@ require "mediawiki/extractor"
 require "grok/api"
 
 module WabbitHoles
-  class ApiTrailSource
+  class GrokSource
     def initialize
       @api = Mediawiki::Api.new("http://en.wikipedia.org/w/api.php")
     end
