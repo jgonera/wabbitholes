@@ -26,7 +26,20 @@
       <div class="content">
         <h1><%= article.title %></h1>
         <p><%= article.extract %></p>
-        <footer> MADE BY 1024 UNIQUE AUTHORS </footer>
+        <div class="breadcrumb">
+          <a href="#">SURREALISM</a> -
+          <a href="#">SALVADOR DALI</a> -
+          <a href="#">ANDY WARHOL</a> -
+          <a href="#">CHELSEA GIRLS</a> -
+          <a href="#">CULT STATUS</a> -
+          <a href="#">WOODSTOCK</a> -
+          <a href="#">RAVISHANKAR</a> -
+          <a href="#">MUMBAI</a> -
+          <a href="#">BUDDHISTS</a> -
+          <a href="#">NIRVANA</a> -
+          <strong>ALDOUS HUXLEY!</strong>
+        </div>
+        <footer>THIS ARTICLE WAS MADE BY <em>1024 UNIQUE AUTHORS</em></footer>
       </div>
     </article>
     <% end %>
@@ -39,22 +52,22 @@
           <% end %>
         </ul>
         <footer> If you read this carefully, you probably know a little bit about 10 topics.
-          While you were reading this English Wikipedia received 479 Edits</footer>
-      </div>
-    </article>
-  </div>
+          While you were reading this English Wikipedia received 479 Edits.</footer>
+        </div>
+      </article>
+    </div>
 
 
-  <aside class="overlay">
-    <button class="close"></button>
-    <div class="content">
-      <p>
-        Rabbitholes is a 100 Day experiment which visualizes popuar trails for the top 100 Wikipedia articles and trending topics, One popular article at a time. <br>
-        Data was collected from XYZ Data Sets. </p><br>
-        Rabbitholes was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a>
-      </div>
-    </aside>
+    <aside class="overlay">
+      <button class="close"></button>
+      <div class="content">
+        <p>
+          Rabbitholes is a 100 Day experiment which visualizes popuar trails for the top 100 Wikipedia articles and trending topics, One popular article at a time. <br>
+          Data was collected from XYZ Data Sets. </p><br>
+          Rabbitholes was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a>
+        </div>
+      </aside>
 
-    <%= javascript_include_tag "all" %>
-  </body>
-  </html>
+      <%= javascript_include_tag "all" %>
+    </body>
+    </html>
