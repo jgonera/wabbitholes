@@ -10,8 +10,9 @@ $color-text: #000;
 $color-background-alt: #000;
 $color-text-alt: #fff;
 $color-context: #6d6e70;
-$color-text-secondary: #999;
+$color-text-secondary: #666;
 $color-emphasis: #00af89;
+$color-linkhover:#7cb9e3;
 
 // common
 
@@ -92,58 +93,6 @@ article {
       font-size: 62px;
     }
 
-    .breadcrumb{
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      color: $color-text-secondary;
-      line-height: 1.8;
-      margin-top: 80px;
-      padding-top: 15px;
-    }
-
-    .breadcrumb a {
-      margin: 0px 5px 5px 0px;
-      padding-top: 5px;
-      text-decoration: none;
-      color: $color-text-secondary;
-    }
-    .breadcrumb a:first-child {
-      margin-left: 0;
-    }
-
-    .breadcrumb a:line {
-      margin-left: 0;
-    }
-    .breadcrumb a:hover,
-    .breadcrumb a:focus {
-      color: $color-emphasis;
-    }
-    .breadcrumb a:active {
-      color: $color-text-secondary;
-    }
-    .breadcrumb strong {
-      font-weight: bold;
-      color: #333;
-      margin: 0px 5px 5px 0px;
-    }
-
-    footer {
-      font-family: Arial, sans-serif;
-      margin-top: 2px;
-      font-size: 12px;
-      line-height: 1.5;
-      color: $color-text-secondary;
-
-      em {
-        color: $color-emphasis;
-      }
-    }
-
-    p {
-      margin-top: 20px;
-      font-size: 20px;
-    }
-
     // content on splash screen
 
     &.title {
@@ -162,7 +111,6 @@ article {
     }
 
     // content on last screen
-
 
     &.summary {
 
@@ -195,6 +143,55 @@ article {
         line-height: 1.3;
         font-size: 32px;
 
+      }
+    }
+
+    footer {
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: $color-text-secondary;
+
+      em {
+        color: $color-emphasis;
+      }
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .breadcrumb {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: $color-text-secondary;
+      line-height: 1.8;
+      margin-top: 80px;
+      padding-top: 15px;
+
+      li {
+        margin: 0px 10px 5px 0px;
+        padding-top: 5px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          font-weight: bold;
+        }
+      }
+
+      a {
+        color: $color-text-secondary;
+        text-decoration: none;
+        &:focus, &:hover {
+          color: $color-linkhover;
+        }
+        &:active {
+          color: $color-text-secondary;
+        }
       }
     }
   }
