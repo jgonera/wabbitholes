@@ -127,45 +127,110 @@
 }(window.jQuery || window.Zepto));
 
 ;(function($) {
-  var $window = $(window);
+  var $window = $(window),
+      AUTO_SCROLL_THRESHOLD = 10;
 
   function Scroll(el) {
     this.currentSlide = 0;
+    this.ignoreScroll = false;
     this.lastScrollTop = $window.scrollTop();
     this.$slides = $(el).children();
     this.activate();
   }
 
-  Scroll.prototype.activate = function() {
-    $window.on('scroll.scroll', $.proxy(function() {
-			var scrollTop = $window.scrollTop(),
-          scrollBottom = scrollTop + $window.height(),
-          slidesCount = this.$slides.length - 1;
+  Scroll.prototype._update = function() {
+    this.$currentSlide = this.$slides.eq(this.currentSlide);
+    this.$prevSlide = this.$slides.eq(this._prevSlide());
+    this.$nextSlide = this.$slides.eq(this._nextSlide());
 
+    this.$slides.removeClass('scroll-active');
+    setTimeout($.proxy(function() {
+      this.$slides.removeClass('scroll-prev');
+      this.$slides.removeClass('scroll-next');
+      this.$currentSlide.addClass('scroll-active');
+      this.$prevSlide.addClass('scroll-prev');
+      this.$nextSlide.addClass('scroll-next');
+    }, this), 1000);
+  };
+
+  Scroll.prototype._nextSlide = function() {
+    return this.currentSlide < this.$slides.length - 1 ? this.currentSlide + 1 : 0;
+  };
+
+  Scroll.prototype._prevSlide = function() {
+    return this.currentSlide > 0 ? this.currentSlide - 1 : this.$slides.length - 1;
+  };
+
+  Scroll.prototype.activate = function() {
+    var self = this;
+
+    this._update();
+
+    $window.on('scroll.scroll', $.proxy(function() {
+      var scrollTop = $window.scrollTop(),
+        scrollBottom = scrollTop + $window.height(),
+        slidesCount = this.$slides.length - 1;
+
+      if (this.ignoreScroll) {
+        return;
+      }
+
+      // scroll down
       if (scrollTop > this.lastScrollTop && this.currentSlide + 1 <= slidesCount) {
         var nextSlideTop = this.$slides.eq(this.currentSlide + 1).offset().top;
 
-        if (nextSlideTop < scrollBottom) {
+        if (nextSlideTop + AUTO_SCROLL_THRESHOLD < scrollBottom) {
+          console.log(2);
           ++this.currentSlide;
-          // FIXME: make this scroll smoothly
-          $window.scrollTop(nextSlideTop);
+          this.ignoreScroll = true;
+          $('html, body').animate({
+            scrollTop: nextSlideTop
+          }, 1000, function() {
+            self.ignoreScroll = false;
+          });
+          this._update();
         }
       }
 
+      // scroll up
       if (scrollTop < this.lastScrollTop && this.currentSlide - 1 >= 0) {
         var $prevSlide = this.$slides.eq(this.currentSlide - 1),
             prevSlideTop = $prevSlide.offset().top,
             prevSlideBottom = prevSlideTop + $prevSlide.height();
 
-        if (prevSlideBottom > scrollTop) {
+        if (prevSlideBottom - AUTO_SCROLL_THRESHOLD > scrollTop) {
           --this.currentSlide;
-          // FIXME: make this scroll smoothly
-          $window.scrollTop(prevSlideTop);
+          this.ignoreScroll = true;
+          $('html, body').animate({
+            scrollTop: prevSlideTop
+          }, 1000, function() {
+            self.ignoreScroll = false;
+          });
+          this._update();
         }
       }
 
       this.lastScrollTop = scrollTop;
     }, this));
+
+    $window.on('mousewheel.scroll', function(ev) {
+      return !self.ignoreScroll;
+    }).on('keydown.scroll', function(ev) {
+      if (ev.which === 36) {
+        // Home key
+        self.ignoreScroll = true;
+        self.currentSlide = 0;
+        self._update();
+      } else if (ev.which === 35) {
+        // End key
+        self.ignoreScroll = true;
+        self.currentSlide = self.$slides.length - 1;
+        self._update();
+      }
+      // TODO: page up and page down
+    }).on('keyup.scroll', function() {
+      self.ignoreScroll = false;
+    });
   };
 
   Scroll.prototype.deactivate = function() {

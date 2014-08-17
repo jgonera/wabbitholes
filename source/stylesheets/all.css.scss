@@ -90,15 +90,21 @@ aside {
 
   article {
     min-height: 100%;
+    position: relative;
 
     .image {
-      position: fixed;
+      position: absolute;
       top: 0;
       right: 0;
       width: 40%;
       height: 100%;
-      background: url(image.jpg);
       z-index: 1;
+      background-size: auto 100%;
+      background-position: 50% 50%;
+    }
+
+    &.scroll-active .image {
+      position: fixed;
     }
 
     h1 {

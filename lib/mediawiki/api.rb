@@ -49,10 +49,11 @@ module Mediawiki
         titles: title,
         exintro: true,
         explaintext: true,
-        exsentences: 3,
+        exsentences: 10,
         piprop: "thumbnail",
         # one of MultimediaViewer buckets, avoid generating new sizes
-        pithumbsize: 1920
+        # 320, 640, 800, 1024, 1280, 1920, 2560, 2880
+        pithumbsize: 1024
       }
 
       data = JSON.parse(resp.body)["query"]["pages"].values.first
