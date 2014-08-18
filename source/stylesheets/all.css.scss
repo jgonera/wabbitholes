@@ -35,6 +35,10 @@ article {
       color: $color-context;
     }
   }
+
+  .image {
+    background-position: 50% 50%;
+  }
 }
 
 // styling for the about overlay
@@ -82,7 +86,6 @@ article {
       height: 100%;
       z-index: 1;
       background-size: auto 100%;
-      background-position: 50% 50%;
     }
 
     &.scroll-active .image {
@@ -244,7 +247,7 @@ article {
     .image {
       width: 100%;
       height: 30%;
-      background: url(image.jpg);
+      background-size: 100% auto;
     }
 
     .content {
