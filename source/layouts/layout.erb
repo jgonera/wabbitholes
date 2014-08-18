@@ -28,14 +28,17 @@
         <p><%= article.extract %></p>
         <ul class="breadcrumb">
           <% current_page.data.articles[0..i+1].each_with_index do |breadcrumb, j| %>
-            <% if i != j %>
-              <li><a href="#"><%= breadcrumb.title %></a></li>
-            <% else %>
-              <li class="current"><%= breadcrumb.title %></li>
-            <% end %>
+          <% if i != j %>
+          <li><a href="#"><%= breadcrumb.title %></a></li>
+          <% else %>
+          <li class="current"><%= breadcrumb.title %></li>
+          <% end %>
           <% end %>
         </ul>
-        <footer><em>1024 </em> unique authors co-authored the <%= article.title %> article</footer>
+        <footer>
+          <p class="stats"><em>1024 unique authors </em> co-authored the <%= article.title %> article.</p>
+          Also,<%= article.title %> was started by an <em> anonymous user </em> in 2005.</p>
+        </footer>
       </div>
     </article>
     <% end %>
