@@ -11,7 +11,7 @@ $color-background-alt: #000;
 $color-text-alt: #fff;
 $color-context: #6d6e70;
 $color-text-secondary: #666;
-$color-emphasis: #00af89;
+$color-emphasis: #ffffff;
 $color-linkhover:#7cb9e3;
 
 // common
@@ -152,12 +152,18 @@ article {
     footer {
       font-family: Arial, sans-serif;
       margin-top: 2px;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.5;
       color: $color-text-secondary;
+      text-transform: uppercase;
 
       em {
-        color: $color-emphasis;
+        display: inline-block;
+        border-radius: 2px;
+        margin: 0.1em .25em .5em 0;
+        padding: 0.1em 0.5em 0 0.5em;
+        background: #4e5f76;
+        color: #fff;
       }
     }
 
@@ -179,7 +185,7 @@ article {
         display: inline-block;
 
         &:after {
-          content: " ·";
+          content: " · ";
         }
 
         &:last-child {
@@ -190,6 +196,7 @@ article {
       }
 
       .current {
+        color: #4e5f76;
         font-weight: bold;
       }
 
