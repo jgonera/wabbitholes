@@ -26,8 +26,8 @@
 
     // FIXME: define callback/event and move outside
     setTimeout($.proxy(function() {
-      this.$prevSlide.find('.content').scrollTop(0);
-      this.$nextSlide.find('.content').scrollTop(0);
+      this.$prevSlide.scrollTop(0);
+      this.$nextSlide.scrollTop(0);
     }, this), 150);
   };
 
@@ -37,8 +37,8 @@
 
     // FIXME: define callback/event and move outside
     setTimeout($.proxy(function() {
-      this.$prevSlide.find('.content').scrollTop(0);
-      this.$nextSlide.find('.content').scrollTop(0);
+      this.$prevSlide.scrollTop(0);
+      this.$nextSlide.scrollTop(0);
     }, this), 150);
   };
 
