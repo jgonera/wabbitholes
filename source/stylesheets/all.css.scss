@@ -170,17 +170,24 @@ article {
       line-height: 1.8;
       margin-top: 80px;
       padding-top: 15px;
+      text-transform: uppercase;
 
       li {
-        margin: 0px 10px 5px 0px;
-        padding-top: 5px;
+        display: inline-block;
 
-        &:first-child {
-          margin-left: 0;
+        &:after {
+          content: " ·";
         }
+
         &:last-child {
-          font-weight: bold;
+          &:after {
+            content: "";
+          }
         }
+      }
+
+      .current {
+        font-weight: bold;
       }
 
       a {
