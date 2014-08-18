@@ -9,6 +9,7 @@
   }
 
   function Swipe(el) {
+    this.active = false;
     this.currentSlide = 0;
     this.swiping = false;
     this.$container = $(el)
@@ -57,14 +58,21 @@
     translate(this.$prevSlide, -this.$container.width());
     translate(this.$nextSlide, this.$container.width());
 
-    // wait for the transition to finish
-    setTimeout($.proxy(function() {
-      this.$slides.removeClass('swipe-active');
-      this.$currentSlide
-        .add(this.$prevSlide)
-        .add(this.$nextSlide)
-        .addClass('swipe-active');
-    }, this), 150);
+    if (this.active) {
+      // wait for the transition to finish
+      setTimeout($.proxy(this, '_updateClasses'), 150);
+    } else {
+      // set classes without delay when activating
+      this._updateClasses();
+    }
+  };
+
+  Swipe.prototype._updateClasses = function() {
+    this.$slides.removeClass('swipe-active');
+    this.$currentSlide
+      .add(this.$prevSlide)
+      .add(this.$nextSlide)
+      .addClass('swipe-active');
   };
 
   Swipe.prototype._onTouchStart = function(ev) {
@@ -112,14 +120,17 @@
   };
 
   Swipe.prototype.activate = function() {
-    this.$container.addClass('swipe-container');
-    this._update();
-    $(window).on('resize.swipe', $.proxy(this, '_update'));
+    if (!this.active) {
+      this.$container.addClass('swipe-container');
+      this._update();
+      $(window).on('resize.swipe', $.proxy(this, '_update'));
+      this.active = true;
+    }
   };
 
   Swipe.prototype.deactivate = function() {
     this.$container.removeClass('swipe-container');
-    this.$slides.removeAttr('style');
+    this.$slides.removeAttr('style').removeClass('swipe-slide swipe-active');
     $(window).off('.swipe');
   };
 
@@ -131,6 +142,7 @@
       AUTO_SCROLL_THRESHOLD = 10;
 
   function Scroll(el) {
+    this.active = false;
     this.currentSlide = 0;
     this.ignoreScroll = false;
     this.lastScrollTop = $window.scrollTop();
@@ -143,41 +155,54 @@
     this.$prevSlide = this.$slides.eq(this._prevSlide());
     this.$nextSlide = this.$slides.eq(this._nextSlide());
 
+    this.ignoreScroll = true;
     this.$slides.removeClass('scroll-active');
-    setTimeout($.proxy(function() {
-      this.$slides.removeClass('scroll-prev');
-      this.$slides.removeClass('scroll-next');
-      this.$currentSlide.addClass('scroll-active');
-      this.$prevSlide.addClass('scroll-prev');
-      this.$nextSlide.addClass('scroll-next');
-    }, this), 1000);
+
+    if (this.active) {
+      $('html, body').animate({
+        scrollTop: this.$currentSlide.offset().top
+      }, 1000, $.proxy(this, '_updateClasses'));
+    } else {
+      // set classes without scrolling and delay when activating
+      this._updateClasses();
+    }
   };
 
   Scroll.prototype._nextSlide = function() {
-    return this.currentSlide < this.$slides.length - 1 ? this.currentSlide + 1 : 0;
+    return this.currentSlide < this.$slides.length - 1 ? this.currentSlide + 1 : this.currentSlide;
   };
 
   Scroll.prototype._prevSlide = function() {
-    return this.currentSlide > 0 ? this.currentSlide - 1 : this.$slides.length - 1;
+    return this.currentSlide > 0 ? this.currentSlide - 1 : 0;
+  };
+
+  Scroll.prototype._updateClasses = function() {
+    this.ignoreScroll = false;
+    this.$slides.removeClass('scroll-prev scroll-next');
+    this.$currentSlide.addClass('scroll-active');
+    this.$prevSlide.addClass('scroll-prev');
+    this.$nextSlide.addClass('scroll-next');
   };
 
   Scroll.prototype.activate = function() {
-    this._update();
+    if (!this.active) {
+      $window
+        .on('scroll.scroll', $.proxy(this, '_onScroll'))
+        .on('mousewheel.scroll', $.proxy(this, '_onMouseWheel'))
+        .on('keydown.scroll', $.proxy(this, '_onKeyDown'));
 
-    $window
-      .on('scroll.scroll', $.proxy(this, '_onScroll'))
-      .on('mousewheel.scroll', $.proxy(this, '_onMouseWheel'))
-      .on('keydown.scroll', $.proxy(this, '_onKeyDown'))
-      .on('keyup.scroll', $.proxy(this, '_onKeyUp'));
+      this._update();
+      this.active = true;
+    }
   };
 
   Scroll.prototype.deactivate = function() {
     $window.off('.scroll');
+    this.$slides.removeClass('scroll-active scroll-prev scroll-next');
   };
 
   Scroll.prototype._onScroll = function() {
-    var self = this,
-        scrollTop = $window.scrollTop(),
+    var scrollTop = $window.scrollTop(),
         scrollBottom = scrollTop + $window.height(),
         slidesCount = this.$slides.length - 1;
 
@@ -185,36 +210,21 @@
       return;
     }
 
-    // scroll down
-    if (scrollTop > this.lastScrollTop && this.currentSlide + 1 <= slidesCount) {
-      var nextSlideTop = this.$slides.eq(this.currentSlide + 1).offset().top;
+    if (scrollTop > this.lastScrollTop && this.currentSlide <= slidesCount - 1) {
+      // scroll down
+      var nextSlideTop = this.$nextSlide.offset().top;
 
       if (nextSlideTop + AUTO_SCROLL_THRESHOLD < scrollBottom) {
-        ++this.currentSlide;
-        this.ignoreScroll = true;
-        $('html, body').animate({
-          scrollTop: nextSlideTop
-        }, 1000, function() {
-          self.ignoreScroll = false;
-        });
+        this.currentSlide = this._nextSlide();
         this._update();
       }
-    }
-
-    // scroll up
-    if (scrollTop < this.lastScrollTop && this.currentSlide - 1 >= 0) {
-      var $prevSlide = this.$slides.eq(this.currentSlide - 1),
-          prevSlideTop = $prevSlide.offset().top,
-          prevSlideBottom = prevSlideTop + $prevSlide.height();
+    } else if (scrollTop < this.lastScrollTop && this.currentSlide >= 1) {
+      // scroll up
+      var prevSlideTop = this.$prevSlide.offset().top,
+          prevSlideBottom = prevSlideTop + this.$prevSlide.height();
 
       if (prevSlideBottom - AUTO_SCROLL_THRESHOLD > scrollTop) {
-        --this.currentSlide;
-        this.ignoreScroll = true;
-        $('html, body').animate({
-          scrollTop: prevSlideTop
-        }, 1000, function() {
-          self.ignoreScroll = false;
-        });
+        this.currentSlide = this._prevSlide();
         this._update();
       }
     }
@@ -231,22 +241,19 @@
       this.ignoreScroll = true;
 
       switch (ev.which) {
-        // Home key
-        case 36: this.currentSlide = 0; break;
-        // End key
-        case 35: this.currentSlide = this.$slides.length - 1; break;
         // Page Up key
         case 33: this.currentSlide = this._prevSlide(); break;
         // Page Down key
         case 34: this.currentSlide = this._nextSlide(); break;
+        // Home key
+        case 36: this.currentSlide = 0; break;
+        // End key
+        case 35: this.currentSlide = this.$slides.length - 1; break;
       }
 
       this._update();
+      return false;
     }
-  };
-
-  Scroll.prototype._onKeyUp = function() {
-    this.ignoreScroll = false;
   };
 
   $.Scroll = Scroll;
@@ -258,7 +265,7 @@
       mediaQuery = window.matchMedia('(max-width: 50em)');
 
   function checkMediaQuery(query) {
-    if (query.matches && 'touchstart' in window) {
+    if (query.matches && 'ontouchstart' in window) {
       scroll.deactivate();
       swipe.activate();
     } else {
@@ -269,13 +276,6 @@
 
   checkMediaQuery(mediaQuery);
   mediaQuery.addListener(checkMediaQuery);
-
-  $('.previous').on('click', function() {
-    swipe.prev();
-  });
-  $('.next').on('click', function() {
-    swipe.next();
-  });
 
   $('.about').on('click touchend', function() {
     $('.overlay').addClass('visible');
