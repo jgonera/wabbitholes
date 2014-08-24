@@ -11,11 +11,6 @@
   height: 100%;
 }
 
-/* Translate children, not the slide itself in case we want position: fixed
- * elements in slides
- * (see https://code.google.com/p/chromium/issues/detail?id=20574)
- */
-
 .swipe-container .swipe-slide {
   -webkit-transform: translate3d(0, -9999px, 0);
   transform: translate3d(0, -9999px, 0);
@@ -31,3 +26,16 @@
   transition: none;
 }
 
+
+.scroll-active .scroll-fixed {
+  position: fixed;
+}
+
+.scroll-fixed {
+  position: absolute;
+}
+
+.scroll-prev .scroll-fixed {
+  top: auto !important;
+  bottom: 0 !important;
+}

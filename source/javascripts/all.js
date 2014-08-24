@@ -139,7 +139,7 @@
 
 ;(function($) {
   var $window = $(window),
-      AUTO_SCROLL_THRESHOLD = 10;
+      AUTO_SCROLL_THRESHOLD = 0;
 
   function Scroll(el) {
     this.active = false;
@@ -154,17 +154,17 @@
     this.$currentSlide = this.$slides.eq(this.currentSlide);
     this.$prevSlide = this.$slides.eq(this._prevSlide());
     this.$nextSlide = this.$slides.eq(this._nextSlide());
-
-    this.ignoreScroll = true;
-    this.$slides.removeClass('scroll-active');
+    this.currentSlideTop = this.$currentSlide.offset().top;
+    this.currentSlideBottom = this.currentSlideTop + this.$currentSlide.height();
 
     if (this.active) {
+      this.ignoreScroll = true;
+
       $('html, body').animate({
-        scrollTop: this.$currentSlide.offset().top
-      }, 1000, $.proxy(this, '_updateClasses'));
-    } else {
-      // set classes without scrolling and delay when activating
-      this._updateClasses();
+        scrollTop: this.currentSlideTop
+      }, 1000, $.proxy(function() {
+        this.ignoreScroll = false;
+      }, this));
     }
   };
 
@@ -174,14 +174,6 @@
 
   Scroll.prototype._prevSlide = function() {
     return this.currentSlide > 0 ? this.currentSlide - 1 : 0;
-  };
-
-  Scroll.prototype._updateClasses = function() {
-    this.ignoreScroll = false;
-    this.$slides.removeClass('scroll-prev scroll-next');
-    this.$currentSlide.addClass('scroll-active');
-    this.$prevSlide.addClass('scroll-prev');
-    this.$nextSlide.addClass('scroll-next');
   };
 
   Scroll.prototype.activate = function() {
@@ -204,7 +196,30 @@
   Scroll.prototype._onScroll = function() {
     var scrollTop = $window.scrollTop(),
         scrollBottom = scrollTop + $window.height(),
-        slidesCount = this.$slides.length - 1;
+        slidesCount = this.$slides.length - 1,
+        // FIXME: this is not necessary, currentSlideTop/Bottom can be used
+        // instead
+        nextSlideTop = this.$nextSlide.offset().top,
+        prevSlideTop = this.$prevSlide.offset().top,
+        prevSlideBottom = prevSlideTop + this.$prevSlide.height();
+
+    if (scrollTop > this.lastScrollTop) {
+      if (this.currentSlideTop < scrollBottom) {
+        this.$prevSlide.removeClass('scroll-active');
+        this.$prevSlide.addClass('scroll-prev');
+      }
+      if (this.currentSlideTop <= scrollTop) {
+        this.$currentSlide.addClass('scroll-active');
+      }
+    } else {
+      if (this.currentSlideBottom >= scrollBottom) {
+        this.$currentSlide.removeClass('scroll-prev');
+        this.$currentSlide.addClass('scroll-active');
+      }
+      if (this.currentSlideBottom >= scrollTop) {
+        this.$nextSlide.removeClass('scroll-active');
+      }
+    }
 
     if (this.ignoreScroll) {
       return;
@@ -212,17 +227,12 @@
 
     if (scrollTop > this.lastScrollTop && this.currentSlide <= slidesCount - 1) {
       // scroll down
-      var nextSlideTop = this.$nextSlide.offset().top;
-
       if (nextSlideTop + AUTO_SCROLL_THRESHOLD < scrollBottom) {
         this.currentSlide = this._nextSlide();
         this._update();
       }
     } else if (scrollTop < this.lastScrollTop && this.currentSlide >= 1) {
       // scroll up
-      var prevSlideTop = this.$prevSlide.offset().top,
-          prevSlideBottom = prevSlideTop + this.$prevSlide.height();
-
       if (prevSlideBottom - AUTO_SCROLL_THRESHOLD > scrollTop) {
         this.currentSlide = this._prevSlide();
         this._update();
@@ -238,8 +248,6 @@
 
   Scroll.prototype._onKeyDown = function(ev) {
     if (ev.which >= 33 && ev.which <= 36) {
-      this.ignoreScroll = true;
-
       switch (ev.which) {
         // Page Up key
         case 33: this.currentSlide = this._prevSlide(); break;
