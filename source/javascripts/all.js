@@ -175,10 +175,12 @@
   };
 
   Scroll.prototype._delayEnableScroll = function(delay) {
-    clearTimeout(this.scrollTimeout);
-    this.scrollTimeout = setTimeout($.proxy(function() {
-      this.ignoreScroll = false;
-    }, this), 200);
+    if (this.ignoreScroll) {
+      clearTimeout(this.scrollTimeout);
+      this.scrollTimeout = setTimeout($.proxy(function() {
+        this.ignoreScroll = false;
+      }, this), 200);
+    }
   };
 
   Scroll.prototype._nextSlide = function() {
@@ -214,28 +216,28 @@
         scrollBottom = scrollTop + $window.height();
 
     if (scrollTop > this.lastScrollTop) {
+      // scroll down
+      if (!this.transitioning && this.currentSlideBottom < scrollBottom) {
+        this.currentSlide = this._nextSlide();
+        this._update();
+      }
+
       if (this.currentSlideTop < scrollTop) {
         this.$currentSlide.addClass('scroll-active');
       }
-    } else {
+    } else if (scrollTop < this.lastScrollTop) {
+      // scroll up
+      if (!this.transitioning && this.currentSlideTop > scrollTop) {
+        this.currentSlide = this._prevSlide();
+        this._update();
+      }
+
       if (this.currentSlideBottom >= scrollBottom) {
         this.$currentSlide.removeClass('scroll-prev');
         this.$currentSlide.addClass('scroll-active');
       }
       if (this.currentSlideBottom >= scrollTop) {
         this.$nextSlide.removeClass('scroll-active');
-      }
-    }
-
-    if (!this.transitioning) {
-      if (scrollTop > this.lastScrollTop && this.currentSlideBottom < scrollBottom) {
-        // scroll down
-        this.currentSlide = this._nextSlide();
-        this._update();
-      } else if (scrollTop < this.lastScrollTop && this.currentSlideTop > scrollTop) {
-        // scroll up
-        this.currentSlide = this._prevSlide();
-        this._update();
       }
     }
 
