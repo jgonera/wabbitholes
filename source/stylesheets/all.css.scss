@@ -94,16 +94,30 @@ article {
 
     &.title {
       .content {
-        padding-top: 200px;
+        padding-top: 50px;
+        padding-right: 300px;
+        font-size: 54px;
+      }
+
+      em {
+        //text-decoration: underline;
+        display: inline-block;
+        border-radius: 4px;
+        padding: 0.1em 0.2em 0.1em 0.2em;
+        background: #000000;
+        color: #fff;
       }
 
       h1 {
-        font-size: 62px;
+        font-size: 54px;
+        line-height: 1.1;
       }
 
       p {
-        margin-top: 5px;
-        font-size: 20px;
+        color: #000000;
+        font-size: 42px;
+        line-height: 1.2;
+
       }
     }
 
