@@ -139,7 +139,7 @@
 
 ;(function($) {
   var $window = $(window),
-  TRANSITION_THRESHOLD = 10;
+      TRANSITION_THRESHOLD = 10;
 
   function Scroll(el) {
     this.active = false;
