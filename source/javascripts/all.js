@@ -198,7 +198,8 @@
         .on('mousewheel.scroll wheel.scroll', $.proxy(this, '_onWheel'))
         .on('keydown.scroll', $.proxy(this, '_onKeyDown'))
         .on('mousedown.scroll', $.proxy(this, '_onMouseDown'))
-        .on('mouseup.scroll', $.proxy(this, '_onMouseUp'));
+        .on('mouseup.scroll', $.proxy(this, '_onMouseUp'))
+        .on('resize.scroll', $.proxy(this, '_onResize'));
 
       this._update();
       this.active = true;
@@ -292,6 +293,14 @@
 
   Scroll.prototype._onMouseUp = function() {
     this.ignoreScroll = false;
+  };
+
+  Scroll.prototype._onResize = function() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout($.proxy(function() {
+      this.$slides.removeClass('scroll-active scroll-prev');
+      this._update();
+    }, this), 100);
   };
 
   $.Scroll = Scroll;
