@@ -174,7 +174,7 @@
     }
   };
 
-  Scroll.prototype._delayEnableScroll = function() {
+  Scroll.prototype._delayEnableScroll = function(delay) {
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout($.proxy(function() {
       this.ignoreScroll = false;
@@ -214,7 +214,7 @@
         scrollBottom = scrollTop + $window.height();
 
     if (scrollTop > this.lastScrollTop) {
-      if (this.currentSlideTop <= scrollTop) {
+      if (this.currentSlideTop < scrollTop) {
         this.$currentSlide.addClass('scroll-active');
       }
     } else {
@@ -227,7 +227,7 @@
       }
     }
 
-    if (!this.ignoreScroll) {
+    if (!this.transitioning) {
       if (scrollTop > this.lastScrollTop && this.currentSlideBottom < scrollBottom) {
         // scroll down
         this.currentSlide = this._nextSlide();
