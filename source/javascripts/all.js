@@ -156,6 +156,9 @@
     this.currentSlideTop = this.$currentSlide.offset().top;
     this.currentSlideBottom = this.currentSlideTop + this.$currentSlide.height();
 
+    this.$prevSlide.removeClass('scroll-active');
+    this.$prevSlide.addClass('scroll-prev');
+
     if (this.active) {
       this.ignoreScroll = true;
 
@@ -189,7 +192,8 @@
 
   Scroll.prototype.deactivate = function() {
     $window.off('.scroll');
-    this.$slides.removeClass('scroll-active scroll-prev scroll-next');
+    this.$slides.removeClass('scroll-active scroll-prev');
+    this.active = false;
   };
 
   Scroll.prototype._onScroll = function() {
@@ -197,10 +201,6 @@
         scrollBottom = scrollTop + $window.height();
 
     if (scrollTop > this.lastScrollTop) {
-      if (this.currentSlideTop < scrollBottom) {
-        this.$prevSlide.removeClass('scroll-active');
-        this.$prevSlide.addClass('scroll-prev');
-      }
       if (this.currentSlideTop <= scrollTop) {
         this.$currentSlide.addClass('scroll-active');
       }
@@ -236,18 +236,29 @@
   Scroll.prototype._onKeyDown = function(ev) {
     if (ev.which >= 33 && ev.which <= 36) {
       switch (ev.which) {
-        // Page Up key
-        case 33: this.currentSlide = this._prevSlide(); break;
-        // Page Down key
-        case 34: this.currentSlide = this._nextSlide(); break;
-        // Home key
-        case 36: this.currentSlide = 0; break;
-        // End key
-        case 35: this.currentSlide = this.$slides.length - 1; break;
+        case 33:
+          // Page Up key
+          this.currentSlide = this._prevSlide();
+          this._update();
+          return false;
+        case 34:
+          // Page Down key
+          this.currentSlide = this._nextSlide();
+          this._update();
+          return false;
+        case 36:
+          // Home key
+          this.deactivate();
+          this.currentSlide = 0;
+          this.activate();
+          break;
+        case 35:
+          // End key
+          this.deactivate();
+          this.currentSlide = this.$slides.length - 1;
+          this.activate();
+          break;
       }
-
-      this._update();
-      return false;
     }
   };
 
