@@ -144,7 +144,9 @@
     this.active = false;
     this.currentSlide = 0;
     this.ignoreScroll = false;
+    this.transitioning = false;
     this.lastScrollTop = $window.scrollTop();
+    this.lastWheelTimestamp = 0;
     this.$slides = $(el).children();
     this.activate();
   }
@@ -160,14 +162,23 @@
     this.$prevSlide.addClass('scroll-prev');
 
     if (this.active) {
+      this.transitioning = true;
       this.ignoreScroll = true;
 
       $('html, body').animate({
         scrollTop: this.currentSlideTop
       }, 500, $.proxy(function() {
-        this.ignoreScroll = false;
+        this.transitioning = false;
+        this._delayEnableScroll();
       }, this));
     }
+  };
+
+  Scroll.prototype._delayEnableScroll = function() {
+    clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout($.proxy(function() {
+      this.ignoreScroll = false;
+    }, this), 200);
   };
 
   Scroll.prototype._nextSlide = function() {
@@ -231,36 +242,45 @@
     this.lastScrollTop = scrollTop;
   };
 
-  Scroll.prototype._onWheel = function() {
+  Scroll.prototype._onWheel = function(ev) {
+    var timestampDelta = ev.timeStamp - this.lastWheelTimestamp;
+    this.lastWheelTimestamp = ev.timeStamp;
+
+    // delta above 200 means that the user stopped and resumed scrolling
+    // delta below 5 means quick scrolling to get past several slides
+    if (timestampDelta > 5 && timestampDelta < 200) {
+      this._delayEnableScroll();
+    } else if (!this.transitioning) {
+      this.ignoreScroll = false;
+    }
+
     return !this.ignoreScroll;
   };
 
   Scroll.prototype._onKeyDown = function(ev) {
-    if (ev.which >= 33 && ev.which <= 36) {
-      switch (ev.which) {
-        case 33:
-          // Page Up key
-          this.currentSlide = this._prevSlide();
-          this._update();
-          return false;
-        case 34:
-          // Page Down key
-          this.currentSlide = this._nextSlide();
-          this._update();
-          return false;
-        case 36:
-          // Home key
-          this.deactivate();
-          this.currentSlide = 0;
-          this.activate();
-          break;
-        case 35:
-          // End key
-          this.deactivate();
-          this.currentSlide = this.$slides.length - 1;
-          this.activate();
-          break;
-      }
+    switch (ev.which) {
+      case 33:
+        // Page Up key
+        this.currentSlide = this._prevSlide();
+        this._update();
+        return false;
+      case 34:
+        // Page Down key
+        this.currentSlide = this._nextSlide();
+        this._update();
+        return false;
+      case 36:
+        // Home key
+        this.deactivate();
+        this.currentSlide = 0;
+        this.activate();
+        break;
+      case 35:
+        // End key
+        this.deactivate();
+        this.currentSlide = this.$slides.length - 1;
+        this.activate();
+        break;
     }
   };
 
