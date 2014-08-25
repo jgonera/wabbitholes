@@ -138,8 +138,7 @@
 }(window.jQuery || window.Zepto));
 
 ;(function($) {
-  var $window = $(window),
-      AUTO_SCROLL_THRESHOLD = 0;
+  var $window = $(window);
 
   function Scroll(el) {
     this.active = false;
@@ -162,7 +161,7 @@
 
       $('html, body').animate({
         scrollTop: this.currentSlideTop
-      }, 1000, $.proxy(function() {
+      }, 500, $.proxy(function() {
         this.ignoreScroll = false;
       }, this));
     }
@@ -180,7 +179,7 @@
     if (!this.active) {
       $window
         .on('scroll.scroll', $.proxy(this, '_onScroll'))
-        .on('mousewheel.scroll', $.proxy(this, '_onMouseWheel'))
+        .on('mousewheel.scroll wheel.scroll', $.proxy(this, '_onWheel'))
         .on('keydown.scroll', $.proxy(this, '_onKeyDown'));
 
       this._update();
@@ -195,13 +194,7 @@
 
   Scroll.prototype._onScroll = function() {
     var scrollTop = $window.scrollTop(),
-        scrollBottom = scrollTop + $window.height(),
-        slidesCount = this.$slides.length - 1,
-        // FIXME: this is not necessary, currentSlideTop/Bottom can be used
-        // instead
-        nextSlideTop = this.$nextSlide.offset().top,
-        prevSlideTop = this.$prevSlide.offset().top,
-        prevSlideBottom = prevSlideTop + this.$prevSlide.height();
+        scrollBottom = scrollTop + $window.height();
 
     if (scrollTop > this.lastScrollTop) {
       if (this.currentSlideTop < scrollBottom) {
@@ -221,19 +214,13 @@
       }
     }
 
-    if (this.ignoreScroll) {
-      return;
-    }
-
-    if (scrollTop > this.lastScrollTop && this.currentSlide <= slidesCount - 1) {
-      // scroll down
-      if (nextSlideTop + AUTO_SCROLL_THRESHOLD < scrollBottom) {
+    if (!this.ignoreScroll) {
+      if (scrollTop > this.lastScrollTop && this.currentSlideBottom < scrollBottom) {
+        // scroll down
         this.currentSlide = this._nextSlide();
         this._update();
-      }
-    } else if (scrollTop < this.lastScrollTop && this.currentSlide >= 1) {
-      // scroll up
-      if (prevSlideBottom - AUTO_SCROLL_THRESHOLD > scrollTop) {
+      } else if (scrollTop < this.lastScrollTop && this.currentSlideTop > scrollTop) {
+        // scroll up
         this.currentSlide = this._prevSlide();
         this._update();
       }
@@ -242,7 +229,7 @@
     this.lastScrollTop = scrollTop;
   };
 
-  Scroll.prototype._onMouseWheel = function() {
+  Scroll.prototype._onWheel = function() {
     return !this.ignoreScroll;
   };
 
