@@ -36,8 +36,12 @@
           <% end %>
         </ul>
         <footer>
-          <p class="stats"><em>1024 unique authors </em> co-authored the <%= article.title %> article.</p>
-          Also,<%= article.title %> was started by an <em> anonymous user </em> in 2005.</p>
+          <p class="stats"><em><%= article.distinct_authors %> unique authors </em> co-authored the <%= article.title %> article.</p>
+          Also, <%= article.title %> was started
+          <% if article.started_by_anonymous %>
+            by an <em>anonymous user</em>
+          <% end %>
+          in <%= article.creation_date %>.</p>
         </footer>
       </div>
     </article>

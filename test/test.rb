@@ -12,7 +12,7 @@ require "grok/api"
 #puts grok_api.latest_30_total("Cat")
 #puts api.get_article_data("Surrealism")
 
-info = Mediawiki::Info.new("Albert Einstein")
+info = Mediawiki::Info.new("Science")
 puts info.page_creator
 puts info.started_by_anonymous?
 puts info.distinct_authors
