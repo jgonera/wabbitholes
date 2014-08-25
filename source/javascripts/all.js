@@ -138,7 +138,8 @@
 }(window.jQuery || window.Zepto));
 
 ;(function($) {
-  var $window = $(window);
+  var $window = $(window),
+  TRANSITION_THRESHOLD = 10;
 
   function Scroll(el) {
     this.active = false;
@@ -151,7 +152,7 @@
     this.activate();
   }
 
-  Scroll.prototype._update = function() {
+  Scroll.prototype._update = function(animate) {
     this.$currentSlide = this.$slides.eq(this.currentSlide);
     this.$prevSlide = this.$slides.eq(this._prevSlide());
     this.$nextSlide = this.$slides.eq(this._nextSlide());
@@ -161,7 +162,7 @@
     this.$prevSlide.removeClass('scroll-active');
     this.$prevSlide.addClass('scroll-prev');
 
-    if (this.active) {
+    if (animate) {
       this.transitioning = true;
       this.ignoreScroll = true;
 
@@ -201,7 +202,7 @@
         .on('mouseup.scroll', $.proxy(this, '_onMouseUp'))
         .on('resize.scroll', $.proxy(this, '_onResize'));
 
-      this._update();
+      this._update(false);
       this.active = true;
     }
   };
@@ -218,9 +219,9 @@
 
     if (scrollTop > this.lastScrollTop) {
       // scroll down
-      if (!this.transitioning && this.currentSlideBottom < scrollBottom) {
+      if (this.currentSlideBottom + TRANSITION_THRESHOLD < scrollBottom) {
         this.currentSlide = this._nextSlide();
-        this._update();
+        this._update(!this.transitioning);
       }
 
       if (this.currentSlideTop < scrollTop) {
@@ -228,9 +229,9 @@
       }
     } else if (scrollTop < this.lastScrollTop) {
       // scroll up
-      if (!this.transitioning && this.currentSlideTop > scrollTop) {
+      if (this.currentSlideTop - TRANSITION_THRESHOLD > scrollTop) {
         this.currentSlide = this._prevSlide();
-        this._update();
+        this._update(!this.transitioning);
       }
 
       if (this.currentSlideBottom >= scrollBottom) {
@@ -265,12 +266,12 @@
       case 33:
         // Page Up key
         this.currentSlide = this._prevSlide();
-        this._update();
+        this._update(true);
         return false;
       case 34:
         // Page Down key
         this.currentSlide = this._nextSlide();
-        this._update();
+        this._update(true);
         return false;
       case 36:
         // Home key
@@ -288,18 +289,21 @@
   };
 
   Scroll.prototype._onMouseDown = function() {
+    this.$slides.removeClass('scroll-active scroll-prev');
     this.ignoreScroll = true;
+    this.transitioning = true;
   };
 
   Scroll.prototype._onMouseUp = function() {
     this.ignoreScroll = false;
+    this._update(true);
   };
 
   Scroll.prototype._onResize = function() {
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout($.proxy(function() {
       this.$slides.removeClass('scroll-active scroll-prev');
-      this._update();
+      this._update(true);
     }, this), 100);
   };
 
