@@ -49,7 +49,7 @@ module Mediawiki
         titles: title,
         exintro: true,
         explaintext: true,
-        exsentences: 10,
+        exsentences: 3,
         piprop: "thumbnail",
         # one of MultimediaViewer buckets, avoid generating new sizes
         # 320, 640, 800, 1024, 1280, 1920, 2560, 2880
