@@ -183,7 +183,9 @@
       $window
         .on('scroll.scroll', $.proxy(this, '_onScroll'))
         .on('mousewheel.scroll wheel.scroll', $.proxy(this, '_onWheel'))
-        .on('keydown.scroll', $.proxy(this, '_onKeyDown'));
+        .on('keydown.scroll', $.proxy(this, '_onKeyDown'))
+        .on('mousedown.scroll', $.proxy(this, '_onMouseDown'))
+        .on('mouseup.scroll', $.proxy(this, '_onMouseUp'));
 
       this._update();
       this.active = true;
@@ -260,6 +262,14 @@
           break;
       }
     }
+  };
+
+  Scroll.prototype._onMouseDown = function() {
+    this.ignoreScroll = true;
+  };
+
+  Scroll.prototype._onMouseUp = function() {
+    this.ignoreScroll = false;
   };
 
   $.Scroll = Scroll;
