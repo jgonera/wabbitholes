@@ -17,8 +17,9 @@
     <article class="section title">
       <div class="content">
 
-        <p>The <em><%= current_page.data.articles.first.title %></em> to <em><%= current_page.data.articles.last.title %></em> Wikipedia Trail</p>
-        <p>Most People who start reading the <%= current_page.data.articles.first.title %> article  on Wikipedia finish up at the <%= current_page.data.articles.last.title %> article .
+        <p><em><%= current_page.data.articles.first.title %></em></p>
+        <p><em><%= current_page.data.articles.last.title %></em></p>
+        <p>Starting from the<%= current_page.data.articles.first.title %> article on Wikipedia, most users finish up at the <%= current_page.data.articles.last.title %> article.
           Its the most popular trail starting from 'Earth'.
         </p>
         <p>Trails show the <em>serendipity</em> and the <em>goofiness</em> of reading Wikipedia. Today is <em>day 1</em> of a handpicked topic trail from the top 100 Wikipedia articles. 100 Days of trails is made with love over chai and sandwiches.</p>
@@ -43,7 +44,7 @@
           <p class="stats"><em><%= article.distinct_authors %> unique authors </em> co-authored the <%= article.title %> article.</p>
           Also, <%= article.title %> was started
           <% if article.started_by_anonymous %>
-            by an <em>anonymous user</em>
+          by an <em>anonymous user</em>
           <% end %>
           in <%= article.creation_date %>.</p>
         </footer>
@@ -58,23 +59,24 @@
           <li><%= article.title %></li>
           <% end %>
         </ul>
-        <footer> If you read this carefully, you probably know a little bit about 10 topics.
-          While you were reading this English Wikipedia received 479 Edits.</footer>
-        </div>
-      </article>
+        <footer></footer>
+      </div>
+    </article>
+  </div>
+</div>
+
+
+<aside class="overlay">
+  <button class="close"></button>
+  <div class="content">
+    <p>
+      100 Days of Wikipedia Trails is an experiment which visualizes popuar trails for the top hundered Wikipedia articles and trending topics, one popular article at a time. <br>
+      Data was collected from XYZ Data Sets. </p><br>
+      Trails was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a>
+      <p><a href="https://twitter.com/share" class="twitter-share-button" data-via="vibhabamba" data-size="large">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
     </div>
+  </aside>
 
-
-    <aside class="overlay">
-      <button class="close"></button>
-      <div class="content">
-        <p>
-          Rabbitholes is a 100 Day experiment which visualizes popuar trails for the top 100 Wikipedia articles and trending topics, One popular article at a time. <br>
-          Data was collected from XYZ Data Sets. </p><br>
-          Rabbitholes was made by <a href="www.twitter.com/vibhabamba">Vibha</a> and <a href="www.twitter.com/jgonera">Juliusz</a>
-        </div>
-      </aside>
-
-      <%= javascript_include_tag "all" %>
-    </body>
-    </html>
+  <%= javascript_include_tag "all" %>
+</body>
+</html>
