@@ -143,10 +143,9 @@
 
   function Scroll(el) {
     this.active = false;
-    this.currentSlide = 0;
+    this.currentSlide = null;
     this.ignoreScroll = false;
     this.transitioning = false;
-    this.lastScrollTop = $window.scrollTop();
     this.lastWheelTimestamp = 0;
     this.$slides = $(el).children();
     this.activate();
@@ -202,7 +201,6 @@
         .on('mouseup.scroll', $.proxy(this, '_onMouseUp'))
         .on('resize.scroll', $.proxy(this, '_onResize'));
 
-      this._update(false);
       this.active = true;
     }
   };
@@ -216,6 +214,19 @@
   Scroll.prototype._onScroll = function() {
     var scrollTop = $window.scrollTop(),
         scrollBottom = scrollTop + $window.height();
+
+    // need to init current slide here not in activate because scrollTop()
+    // gives wrong result before the first scroll event on Chrome
+    if (this.currentSlide === null) {
+      this.$slides.each($.proxy(function(i, el) {
+        if ($(el).offset().top >= $window.scrollTop()) {
+          this.currentSlide = i;
+          return false;
+        }
+      }, this));
+
+      this._update(false);
+    }
 
     if (scrollTop > this.lastScrollTop) {
       // scroll down
