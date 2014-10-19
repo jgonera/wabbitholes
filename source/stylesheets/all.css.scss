@@ -333,7 +333,15 @@ article {
         margin-top: 15px;
         font-size: 21px;
       }
+    }
 
+    &.card {
+      .content {
+        // change this to "scroll" if momentum on iOS doesn't work
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 70%;
+      }
     }
 
     &.summary {

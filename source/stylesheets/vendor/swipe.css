@@ -27,15 +27,15 @@
 }
 
 
-.scroll-active .scroll-fixed {
+.scroll-container .scroll-active .scroll-fixed {
   position: fixed;
 }
 
-.scroll-fixed {
+.scroll-container .scroll-fixed {
   position: absolute;
 }
 
-.scroll-prev .scroll-fixed {
+.scroll-container .scroll-prev .scroll-fixed {
   top: auto !important;
   bottom: 0 !important;
 }

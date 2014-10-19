@@ -26,8 +26,8 @@
 
     // FIXME: define callback/event and move outside
     setTimeout($.proxy(function() {
-      this.$prevSlide.scrollTop(0);
-      this.$nextSlide.scrollTop(0);
+      this.$prevSlide.find('.content').scrollTop(0);
+      this.$nextSlide.find('.content').scrollTop(0);
     }, this), 150);
   };
 
@@ -37,8 +37,8 @@
 
     // FIXME: define callback/event and move outside
     setTimeout($.proxy(function() {
-      this.$prevSlide.scrollTop(0);
-      this.$nextSlide.scrollTop(0);
+      this.$prevSlide.find('.content').scrollTop(0);
+      this.$nextSlide.find('.content').scrollTop(0);
     }, this), 150);
   };
 
@@ -147,7 +147,8 @@
     this.ignoreScroll = false;
     this.transitioning = false;
     this.lastWheelTimestamp = 0;
-    this.$slides = $(el).children();
+    this.$container = $(el)
+    this.$slides = this.$container.children();
     this.activate();
   }
 
@@ -193,6 +194,7 @@
 
   Scroll.prototype.activate = function() {
     if (!this.active) {
+      this.$container.addClass('scroll-container');
       $window
         .on('scroll.scroll', $.proxy(this, '_onScroll'))
         .on('mousewheel.scroll wheel.scroll', $.proxy(this, '_onWheel'))
@@ -208,6 +210,7 @@
   Scroll.prototype.deactivate = function() {
     $window.off('.scroll');
     this.$slides.removeClass('scroll-active scroll-prev');
+    this.$container.removeClass('scroll-container');
     this.active = false;
   };
 
