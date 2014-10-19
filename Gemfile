@@ -1,6 +1,6 @@
 #ruby=ruby-2.1.1
 #ruby-gemset=wabbitholes
-ruby '2.1.1'
+ruby '2.1.3'
 
 # If you have OpenSSL installed, we recommend updating
 # the following line to use "https"
