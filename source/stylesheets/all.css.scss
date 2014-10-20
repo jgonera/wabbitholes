@@ -213,7 +213,7 @@ article {
       }
     }
 
-    footer{
+    footer {
 
       font-family: Arial, sans-serif;
       font-size: 11px;
@@ -221,19 +221,19 @@ article {
       text-transform: uppercase;
       line-height: 1.7;
 
-      .stats{
+      .stats {
         padding-top: 22px;
         background: url(trail.svg) no-repeat;
         font-size: 11px;
         line-height: 1.7;
       }
 
-      .trail{
+      .trail {
         width: 57px;
         height: 14px;
       }
 
-      em{
+      em {
         font-size: 11px;
         display: inline-block;
         border-radius: 2px;
@@ -247,7 +247,6 @@ article {
       margin-top: 20px;
       font-size: 20px;
     }
-
 
   }
 
@@ -358,15 +357,7 @@ article {
         margin-top: 15px;
         font-size: 21px;
       }
-    }
 
-    &.card {
-      .content {
-        // change this to "scroll" if momentum on iOS doesn't work
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        height: 70%;
-      }
     }
 
     &.summary {
