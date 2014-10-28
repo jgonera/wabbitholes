@@ -56,6 +56,8 @@
   Scroll.prototype.activate = function() {
     if (!this.active) {
       this.$container.addClass('scroll-container');
+      this.lastScrollTop = $window.scrollTop();
+
       $window
         .on('scroll.scroll', $.proxy(this, '_onScroll'))
         .on('mousewheel.scroll wheel.scroll', $.proxy(this, '_onWheel'))
@@ -89,9 +91,8 @@
         }
       }, this));
 
-      this._update(false);
+      this._update(true);
     }
-
     if (scrollTop > this.lastScrollTop) {
       // scroll down
       if (this.currentSlideBottom + TRANSITION_THRESHOLD < scrollBottom) {
