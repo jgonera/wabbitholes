@@ -37,11 +37,21 @@
   };
 
   Scroll.prototype._delayEnableScroll = function(delay) {
+    var enableScroll = $.proxy(function() {
+      this.ignoreScroll = false;
+      this.delayingEnableScroll = false;
+    }, this);
+
     if (this.ignoreScroll) {
+      // stop ignoring scroll 200ms after last _delayEnableScroll call
       clearTimeout(this.scrollTimeout);
-      this.scrollTimeout = setTimeout($.proxy(function() {
-        this.ignoreScroll = false;
-      }, this), 200);
+      this.scrollTimeout = setTimeout(enableScroll, 200);
+
+      // or after at most 1s since the first _delayEnableScroll call
+      if (!this.delayingEnableScroll) {
+        this.delayingEnableScroll = true;
+        setTimeout(enableScroll, 1000);
+      }
     }
   };
 
@@ -127,8 +137,8 @@
     this.lastWheelTimestamp = ev.timeStamp;
 
     // delta above 200 means that the user stopped and resumed scrolling
-    // delta below 5 means quick scrolling to get past several slides
-    if (timestampDelta > 5 && timestampDelta < 200) {
+    // so we shouldn't ignore anymore
+    if (timestampDelta < 200) {
       this._delayEnableScroll();
     } else if (!this.transitioning) {
       this.ignoreScroll = false;
