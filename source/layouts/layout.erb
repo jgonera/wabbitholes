@@ -22,7 +22,7 @@
         <p>Starting from the<%= current_page.data.articles.first.title %> article on Wikipedia, most users finish up at the <%= current_page.data.articles.last.title %> article.
           Its the most popular trail starting from 'Earth'.
         </p>
-        <p>Trails show the <em>serendipity</em> and the <em>goofiness</em> of reading Wikipedia. Today is <em>day 1</em> of a handpicked topic trail from the top 100 Wikipedia articles. 100 Days of trails is made with love over chai and sandwiches.</p>
+        <p>Today is <em>day 1</em> of a handpicked topic trail from the top 100 Wikipedia articles.</p>
       </div>
     </article>
     <% current_page.data.articles.each_with_index do |article, i| %>
@@ -33,11 +33,11 @@
         <p><%= article.extract %></p>
         <footer>
           <p class="stats">
-            Made by <em><%= article.distinct_authors %></em> unique authors
+            Made by <em><%= article.distinct_authors %> unique authors</em>
             <% if !article.started_by_anonymous %>
             and started in <%= article.creation_date %>.
             <% else %>
-            and started by an anonymous user in <%= article.creation_date %>.
+            and started by an <em>anonymous user</em> in <%= article.creation_date %>.
             <% end %>
           </p>
         </footer>

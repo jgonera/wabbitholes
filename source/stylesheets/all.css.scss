@@ -55,11 +55,13 @@ article {
   }
 
       .breadcrumb {
+      background: url(trail.svg) no-repeat;
+      background-size: 4%;
       font-family: Arial, sans-serif;
       font-size: 11px;
       color: $color-text-secondary;
-      margin-top: 80px;
-      padding-top: 15px;
+      margin-top: 25px;
+      padding-top: 25px;
       text-transform: uppercase;
 
 
@@ -156,7 +158,6 @@ article {
       }
 
       em {
-        //text-decoration: underline;
         display: inline-block;
         border-radius: 4px;
         padding: 0.1em 0.2em 0.1em 0.2em;
@@ -222,8 +223,7 @@ article {
       line-height: 1.7;
 
       .stats {
-        padding-top: 22px;
-        background: url(trail.svg) no-repeat;
+        padding-top: 20px;
         font-size: 11px;
         line-height: 1.7;
       }
@@ -237,8 +237,10 @@ article {
         font-size: 11px;
         display: inline-block;
         border-radius: 2px;
-        padding: 0.1em 0.5em 0 0.5em;
-        background: #4e5f76;
+        padding: 0.1em 0.6em 0 0.6em;
+        background: #546475;
+        //background: #8093a8;
+        //background: #4e5f76;
         color: #fff;
       }
     }
@@ -328,11 +330,6 @@ article {
         padding-top: 22px;
         background: url(trail.svg) no-repeat;
         font-size: 11px;
-        line-height: 1.7;
-      }
-
-      .trail{
-        width: 57px;
         height: 14px;
       }
 
