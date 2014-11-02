@@ -54,49 +54,49 @@ article {
     background-position: 50% 50%;
   }
 
-      .breadcrumb {
-      background: url(trail.svg) no-repeat;
-      background-size: 4%;
-      font-family: Arial, sans-serif;
-      font-size: 11px;
-      color: $color-text-secondary;
-      margin-top: 25px;
-      padding-top: 25px;
-      text-transform: uppercase;
+  .breadcrumb {
+    background: url(trail.svg) no-repeat;
+    background-size: 4%;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    color: $color-text-secondary;
+    margin-top: 25px;
+    padding-top: 25px;
+    text-transform: uppercase;
 
 
 
-      li {
-        display: inline-block;
-        line-height: 1.8;
+    li {
+      display: inline-block;
+      line-height: 1.8;
 
+      &:after {
+        content: " · ";
+      }
+
+      &:last-child {
         &:after {
-          content: " · ";
-        }
-
-        &:last-child {
-          &:after {
-            content: "";
-          }
-        }
-      }
-
-      .current {
-        color: #4e5f76;
-        font-weight: bold;
-      }
-
-      a {
-        color: $color-text-secondary;
-        text-decoration: none;
-        &:focus, &:hover {
-          color: $color-linkhover;
-        }
-        &:active {
-          color: $color-text-secondary;
+          content: "";
         }
       }
     }
+
+    .current {
+      color: #4e5f76;
+      font-weight: bold;
+    }
+
+    a {
+      color: $color-text-secondary;
+      text-decoration: none;
+      &:focus, &:hover {
+        color: $color-linkhover;
+      }
+      &:active {
+        color: $color-text-secondary;
+      }
+    }
+  }
 }
 
 // Desktop styling for the about overlay
@@ -239,8 +239,6 @@ article {
         border-radius: 2px;
         padding: 0.1em 0.6em 0 0.6em;
         background: #546475;
-        //background: #8093a8;
-        //background: #4e5f76;
         color: #fff;
       }
     }
@@ -301,7 +299,7 @@ article {
       width: 100%;
     }
 
-      .breadcrumb {
+    .breadcrumb {
       margin-top: 40px;
     }
 
@@ -359,6 +357,15 @@ article {
         font-size: 21px;
       }
 
+    }
+
+    &.card {
+      .content {
+      // change this to "scroll" if momentum on iOS doesn't work
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      height: 70%;
+     }
     }
 
     &.summary {
