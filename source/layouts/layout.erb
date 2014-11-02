@@ -22,7 +22,7 @@
         <p>Starting from the<%= current_page.data.articles.first.title %> article on Wikipedia, most users finish up at the <%= current_page.data.articles.last.title %> article.
           Its the most popular trail starting from 'Earth'.
         </p>
-        <p>Trails show the <em>serendipity</em> and the <em>goofiness</em> of reading Wikipedia. Today is <em>day 1</em> of a handpicked topic trail from the top 100 Wikipedia articles. 100 Days of trails is made with love over chai and sandwiches.</p>
+        <p>Today is <em>day 1</em> of a handpicked topic trail from the top 100 Wikipedia articles.</p>
       </div>
     </article>
     <% current_page.data.articles.each_with_index do |article, i| %>
@@ -31,6 +31,16 @@
       <div class="content">
         <h1><a target="_blank" href="http://en.wikipedia.org/wiki/<%= article.title %>"><%= article.title %></a></h1>
         <p><%= article.extract %></p>
+        <footer>
+          <p class="stats">
+            Made by <em><%= article.distinct_authors %> unique authors</em>
+            <% if !article.started_by_anonymous %>
+            and started in <%= article.creation_date %>.
+            <% else %>
+            and started by an <em>anonymous user</em> in <%= article.creation_date %>.
+            <% end %>
+          </p>
+        </footer>
         <ul class="breadcrumb">
           <% current_page.data.articles[0..i+1].each_with_index do |breadcrumb, j| %>
           <% if i != j %>
@@ -40,14 +50,6 @@
           <% end %>
           <% end %>
         </ul>
-        <footer>
-          <p class="stats"><em><%= article.distinct_authors %> unique authors </em> co-authored the <%= article.title %> article.</p>
-          Also, <%= article.title %> was started
-          <% if article.started_by_anonymous %>
-          by an <em>anonymous user</em>
-          <% end %>
-          in <%= article.creation_date %>.</p>
-        </footer>
       </div>
     </article>
     <% end %>
