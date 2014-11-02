@@ -32,9 +32,8 @@ module Mediawiki
         redirects: true,
         prop: "extracts",
         titles: title,
-        exintro: true,
         explaintext: true,
-        exsentences: 2
+        exsentences: 3
       }
 
       JSON.parse(resp.body)["query"]["pages"].values.first
@@ -47,7 +46,6 @@ module Mediawiki
         redirects: true,
         prop: "extracts|pageimages",
         titles: title,
-        exintro: true,
         explaintext: true,
         exsentences: 3,
         piprop: "thumbnail",
